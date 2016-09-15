@@ -168,7 +168,7 @@ namespace bas {
 		m_Window->display();
 
 #if B_DEBUG
-		m_DebugWindow->clear(sf::Color::Black);
+		m_DebugWindow->clear(sf::Color::Blue);
 		m_DebugWorld->draw();
 		m_DebugWindow->display();
 #endif
