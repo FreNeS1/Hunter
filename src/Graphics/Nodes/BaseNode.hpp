@@ -1,5 +1,9 @@
 #pragma once
 
+/*
+* AUTHOR: José Antonio Díaz Mata
+*/
+
 #include <SFML/System/NonCopyable.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/Graphics/Transformable.hpp>

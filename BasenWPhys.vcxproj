@@ -81,7 +81,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Cdev\SFML\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Cdev\SFML\include;C:\Cdev\boost_1_61_0\boost_1_61_0\boost</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -108,7 +108,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Cdev\SFML\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Cdev\SFML\include;C:\Cdev\boost_1_61_0\boost_1_61_0\boost</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -143,15 +143,9 @@
     <ClCompile Include="src\Graphics\Nodes\SpriteNode.cpp" />
     <ClCompile Include="src\Graphics\Nodes\TextNode.cpp" />
     <ClCompile Include="src\Input\Input.cpp" />
-    <ClCompile Include="src\Physics\Colision.cpp" />
-    <ClCompile Include="src\Physics\Colisionables\AABB.cpp" />
-    <ClCompile Include="src\Physics\Colisionables\CircleNode.cpp" />
-    <ClCompile Include="src\Physics\Colisionables\ColisionNode.cpp" />
     <ClCompile Include="src\Utility\Options.cpp" />
-    <ClCompile Include="src\Worlds\DebugWorld.cpp" />
     <ClCompile Include="src\Utility\FileIO.cpp" />
     <ClCompile Include="src\Utility\Logger.cpp" />
-    <ClCompile Include="src\Worlds\TestWorld.cpp" />
     <ClCompile Include="src\Worlds\World.cpp" />
     <ClCompile Include="Starter.cpp" />
   </ItemGroup>
@@ -165,18 +159,11 @@
     <ClInclude Include="src\Graphics\Nodes\TextNode.hpp" />
     <ClInclude Include="src\Includes.hpp" />
     <ClInclude Include="src\Input\Input.hpp" />
-    <ClInclude Include="src\Physics\Colision.hpp" />
-    <ClInclude Include="src\Physics\Colisionables\AABB.hpp" />
-    <ClInclude Include="src\Physics\Colisionables\CircleNode.hpp" />
-    <ClInclude Include="src\Physics\Colisionables\ColisionNode.hpp" />
     <ClInclude Include="src\Resources\ResourceHolder.hpp" />
     <ClInclude Include="src\Resources\ResourceHolderNames.hpp" />
     <ClInclude Include="src\Utility\Options.hpp" />
-    <ClInclude Include="src\Worlds\DebugWorld.hpp" />
-    <ClInclude Include="src\Utility\Defines.hpp" />
     <ClInclude Include="src\Utility\FileIO.hpp" />
     <ClInclude Include="src\Utility\Logger.hpp" />
-    <ClInclude Include="src\Worlds\TestWorld.hpp" />
     <ClInclude Include="src\Worlds\World.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Instructions.txt" />
+    <Text Include="TODO.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

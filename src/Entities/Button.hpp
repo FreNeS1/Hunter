@@ -1,5 +1,9 @@
 #pragma once
 
+/*
+* AUTHOR: José Antonio Díaz Mata
+*/
+
 #include "../Graphics/Nodes/DynamicNode.hpp"
 
 namespace bas {

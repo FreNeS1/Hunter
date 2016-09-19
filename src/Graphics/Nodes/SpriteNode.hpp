@@ -1,5 +1,9 @@
 #pragma once
 
+/*
+* AUTHOR: José Antonio Díaz Mata
+*/
+
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 

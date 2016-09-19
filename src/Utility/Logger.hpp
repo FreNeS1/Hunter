@@ -2,28 +2,19 @@
 
 /*
 * AUTHOR: José Antonio Díaz Mata
-* SOURCE: "https://github.com/SFML/SFML/wiki/Source:-Simple-File-Logger-(by-mateandmetal)"
-*
-* LICENSE:  This  program  is  free  software; you can redistribute it and/or
-* modify it under the terms of the GNU General Public License as published by
-* the  Free Software Foundation; either version 3 of the License, or (at your
-* option)  any later version. This program is distributed in the hope that it
-* will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
-* of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-* Public License for more details (copy included in program files).
 */
 
 /*
 * USAGE:
 *
-*	bas::utils::FileLogger log("<Version Number>", "<File Name>");
-*	log << bas::utils::FileLogger::LogType::LOG_INFO << "This is actually working";
-*	log << bas::utils::FileLogger::LogType::LOG_WARNING << "I'm warning you";
-*	log << bas::utils::FileLogger::LogType::LOG_ERROR << "This is an error!";
+*	bas::utils::FileLogger Start([version], [nameOfFile]);
+*	bas::utils::FileLogger::Log(bas::utils::FileLogger::LogType::[Type], [message]);
+*	bas::utils::FileLogger::End();
 */
 
 #include <SFML\System.hpp>
 #include <sstream>
+#include <ctime>
 #include "FileIO.hpp"
 
 namespace bas {
@@ -37,60 +28,24 @@ namespace bas {
 			{
 				LOG_ERROR,
 				LOG_WARNING,
-				LOG_INFO
+				LOG_INFO,
+				LOG_DEBUG
 			};
 
-			FileLogger(const char *program_version = "1.0", const char *fname = "Logger.log");
-			~FileLogger();
+			static void Set(const char *program_version = "noVersion", bool useDate = true);
+			static void End();
 
-			friend FileLogger &operator<< (FileLogger &logger, const LogType l_Type)
-			{
-				std::stringstream ss;
-
-				switch (l_Type) {
-				case FileLogger::LogType::LOG_ERROR:
-					ss << "[ " << logger.getTime() << " ms ] ";
-					ss << "(ERROR): ";
-					logger.m_NumErrors++;
-					break;
-
-				case FileLogger::LogType::LOG_WARNING:
-					ss << "[ " << logger.getTime() << " ms ] ";
-					ss << "(WARNING): ";
-					logger.m_NumWarnings++;
-					break;
-
-				default:
-					ss << "[ " << logger.getTime() << " ms ] ";
-					ss << "(INFO): ";
-					break;
-				}
-
-				FileIO::setTarget(logger.m_File.c_str());
-				FileIO::append(ss.str().c_str());
-
-				return logger;
-			};
-
-			friend FileLogger &operator<< (FileLogger &logger, const char* text)
-			{
-				std::stringstream ss;
-				ss << text << std::endl;
-
-				FileIO::setTarget(logger.m_File.c_str());
-				FileIO::append(ss.str().c_str());
-
-				return logger;
-			};
+			static void Log(FileLogger::LogType l_Type, const char* text);
 
 		private:
-			float			getTime();
+							FileLogger();
+			static int		getTime();
 
 		private:
-			std::string			m_File;
-			sf::Clock			m_Clock;
-			unsigned int		m_NumWarnings;
-			unsigned int		m_NumErrors;
+			static std::string			m_File;
+			static sf::Clock			m_Clock;
+			static unsigned int			m_NumWarnings;
+			static unsigned int			m_NumErrors;
 		};
 	}
 }

@@ -1,5 +1,9 @@
 #pragma once 
 
+/*
+* AUTHOR: José Antonio Díaz Mata
+*/
+
 #include <SFML/System/NonCopyable.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -17,8 +21,7 @@ namespace bas {
 	class World : private sf::NonCopyable
 	{
 	public:
-											World(sf::RenderWindow* window, Input* input);	// Default constructor								// Default destructor ?
-											~World();
+											World(sf::RenderWindow* window, Input* input);	// Default constructor										// ???
 
 		void								build();										// Builds and places the world
 		void								update(sf::Time dt);							// Update method

@@ -9,33 +9,28 @@ namespace bas {
 		, m_Input(input)
 	{ }
 
-	World::~World()
-	{
-		m_Input = nullptr;
-	}
-
 	void World::build()
 	{
 		loadResources();
 		buildScene();
 	}
 
-	void World::loadResources() { }
+	void World::loadResources() { /* Here we should load all the resources needed for the world (textures and such) */ }
 
-	void World::buildScene() { }
+	void World::buildScene() { /* Here we place all the objects and link everything together */ }
 
 	void World::draw()
 	{
+		/* Here we draw the world, this shouldn't be accessed since everything should be placed on the scene */
+
 		m_Window->setView(m_WorldView);
 		m_Window->draw(m_Scene);
-		std::string s = "";
-		if (m_Input->getInput((int)Action::UP))
-			s = "Hi";
-		m_Window->setTitle(s);
 	}
 
 	void World::update(sf::Time dt)
 	{
+		/* Here we update the world, dt is very important unless constant UPS is fixed allways */
+
 		m_Scene.update(dt);
 	}
 

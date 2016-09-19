@@ -2,14 +2,6 @@
 
 /*
 * AUTHOR: José Antonio Díaz Mata
-*
-* LICENSE:  This  program  is  free  software; you can redistribute it and/or
-* modify it under the terms of the GNU General Public License as published by
-* the  Free Software Foundation; either version 3 of the License, or (at your
-* option)  any later version. This program is distributed in the hope that it
-* will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
-* of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-* Public License for more details (copy included in program files).
 */
 
 /*
@@ -17,6 +9,10 @@
 * get stored in the m_flanks array, and input in the m_Input. For a set to be
 * considered a valid option, m_Triggers for that action has to have that code
 * in the array.
+*
+* When someone inputs something the both arrays return 1. As long as the input
+* isn't cleared, flank won't return to zero. Normal usage is
+* (Update the world -> Clear input) for each update tick
 */
 
 #include <SFML/Window/Event.hpp>

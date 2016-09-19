@@ -2,7 +2,7 @@ namespace bas {
 
 	namespace Textures
 	{
-		enum ID			// This is a list of all the texture ID
+		enum ID	
 		{
 			Debug1,
 			Debug2,
@@ -14,7 +14,7 @@ namespace bas {
 
 	namespace Fonts
 	{
-		enum ID			// This is a list of all the texture ID
+		enum ID
 		{
 			Debug1,
 			Debug2,
@@ -27,8 +27,9 @@ namespace bas {
 
 namespace sf
 {
-		class Texture;		// Foward declaration of sf::Texture
-		class Font;
+	/* forward declaration of all sf classes */
+	class Texture;
+	class Font;
 }
 
 namespace bas {

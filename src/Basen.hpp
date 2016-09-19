@@ -2,14 +2,6 @@
 
 /*
 * AUTHOR: José Antonio Díaz Mata
-*
-* LICENSE:  This  program  is  free  software; you can redistribute it and/or
-* modify it under the terms of the GNU General Public License as published by
-* the  Free Software Foundation; either version 3 of the License, or (at your
-* option)  any later version. This program is distributed in the hope that it
-* will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
-* of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-* Public License for more details (copy included in program files).
 */
 
 #include "Includes.hpp"
@@ -32,16 +24,20 @@ namespace bas {
 
 	private:
 		sf::RenderWindow*	m_Window;
-		sf::RenderWindow*	m_DebugWindow;
-
 		World*				m_CurrentWorld;
-		DebugWorld*			m_DebugWorld;
 
 		utils::Options		m_Options;
-		utils::FileLogger	m_Logger;
 		Input				m_Input;
 
 		const char*			m_Name;
 		bool				m_IsFocused;
+
+		/* DEBUG */
+		sf::Time			m_DebugTick = sf::seconds(1);
+		sf::Time			m_DebugTimer = sf::Time::Zero;
+		int					m_DebugFrames = 0;
+		int					m_DebugUpdates = 0;
+
+		std::string			m_DebugTitle;
 	};
 }

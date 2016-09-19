@@ -6,6 +6,8 @@
 #include <stdexcept>
 #include <cassert>
 
+#include "../Utility/Logger.hpp"
+
 namespace bas {
 
 	template <typename Resource, typename Identifier>
@@ -25,6 +27,6 @@ namespace bas {
 		std::map<Identifier, std::unique_ptr<Resource>> resourceMap;
 	};
 
-#include "ResourceHolder.inl"	// We have to explicitly call the "source" file
+#include "ResourceHolder.inl"	// We have to explicitly call the "source" file since it is an inline
 
 }

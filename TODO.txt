@@ -1,0 +1,20 @@
+MAIN THINGS
+
+- Do mouse input.
+- Physics (colisions).
+- Finish the button test class.
+- Figure out what is going on when managing resources (includes).
+- Make a testing world and a testing menu world. Then delete instructions.txt.
+- Figure out and comment nodes
+- Get the required input for mouse and controllers and create default input patterns.
+
+CLEANING UP
+
+- Profile that shit
+- Logs need to be more clean, create a file with time and date, and put them in a folder.
+- Add log interaction in fileIO.
+
+
+NEXT PUSH
+
+- Whenever I feel the project is actually clean.

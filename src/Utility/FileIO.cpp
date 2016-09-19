@@ -19,7 +19,7 @@ namespace bas {
 				os.write(text, strlen(text));
 				if (!os)
 				{
-					// ERROR WRITING!
+					//ERROR WRITING TO FILE!
 					return false;
 				}
 				os.close();

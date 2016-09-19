@@ -1,3 +1,4 @@
+
 #include "Options.hpp"
 
 namespace bas {
@@ -6,6 +7,14 @@ namespace bas {
 		bool toBool(int s) 
 		{
 			return s == 1;
+		}
+
+		int Options::getValue(int location, std::string* contents)
+		{
+			m_Start = m_Indeces[location * 2];
+			m_End = m_Indeces[(location * 2) + 1];
+			std::string s = contents->substr(m_Start, m_End - m_Start);
+			return strtol(s.c_str(), NULL, 0);
 		}
 
 		Options::Options(const char* file)
@@ -30,31 +39,44 @@ namespace bas {
 
 			if (getContents(&contents))		// MANUALLY HANDLE EACH ONE
 			{
-				start = m_Indeces[WIDTH_LOCATION * 2];
-				end = m_Indeces[(WIDTH_LOCATION * 2) + 1];
-				s = contents.substr(start, end - start);
-				m_Width = strtol(s.c_str(), NULL, 0);
-
-				if (m_Width < 200 || m_Width > 10000)
+				m_Width = getValue(WIDTH_LOCATION, &contents);
+				if (m_Width < 240)
 				{
+					utils::FileLogger::Log(utils::FileLogger::LogType::LOG_WARNING, "Width value too small!");
 					return false;
 				}
 
-				start = m_Indeces[HEIGHT_LOCATION * 2];
-				end = m_Indeces[(HEIGHT_LOCATION * 2) + 1];
-				s = contents.substr(start, end - start);
-				m_Height = strtol(s.c_str(), NULL, 0);
-
-				if (m_Height < 200 || m_Height > 10000)
+				m_Height = getValue(HEIGHT_LOCATION, &contents);
+				if (m_Height < 135)
 				{
+					utils::FileLogger::Log(utils::FileLogger::LogType::LOG_WARNING, "Height value too small!");
 					return false;
 				}
 
-				start = m_Indeces[FULLSCREEN_LOCATION * 2];
-				end = m_Indeces[(FULLSCREEN_LOCATION * 2) + 1];
-				s = contents.substr(start, end - start);
-				int i = strtol(s.c_str(), NULL, 0);
-				m_Fullscreen = toBool(i);
+				m_Fullscreen = toBool(getValue(FULLSCREEN_LOCATION, &contents));
+
+				m_FixedFps = toBool(getValue(FIXEDFPS_LOCATION, &contents));
+
+				m_MaxFps = getValue(MAXFPS_LOCATION, &contents);
+				if (m_MaxFps < 1)
+				{
+					utils::FileLogger::Log(utils::FileLogger::LogType::LOG_WARNING, "MaxFps must be greater than 0! We recommend at least 30");
+					return false;
+				}
+
+				m_FixedUps = toBool(getValue(FIXEDUPS_LOCATION, &contents));
+
+				m_MaxUps = getValue(MAXUPS_LOCATION, &contents);
+				if (m_MaxUps < 1)
+				{
+					utils::FileLogger::Log(utils::FileLogger::LogType::LOG_WARNING, "MaxUps must be greater than 0! We recomend at least 100");
+					return false;
+				}
+
+				m_DebugMode = toBool(getValue(DEBUGMODE_LOCATION, &contents));
+				if (m_DebugMode)
+					utils::FileLogger::Log(utils::FileLogger::LogType::LOG_INFO, "Starting up in debug mode");
+
 				return true;
 			}
 			return false;
@@ -62,8 +84,6 @@ namespace bas {
 
 		bool Options::getContents(std::string *contents)
 		{
-			FileIO::setTarget(m_File);
-
 			if (*contents == "")
 			{
 				return false;
@@ -91,9 +111,14 @@ namespace bas {
 
 		void Options::repairOptions()
 		{
-			m_Width = atoi(WIDTH_DEFAULT);
-			m_Height = atoi(HEIGHT_DEFAULT);
+			m_Width = WIDTH_DEFAULT;
+			m_Height = HEIGHT_DEFAULT;
 			m_Fullscreen = toBool(FULLSCREEN_DEFAULT);
+			m_FixedFps = toBool(FIXEDFPS_DEFAULT);
+			m_MaxFps = MAXFPS_DEFAULT;
+			m_FixedUps = toBool(FIXEDUPS_DEFAULT);
+			m_MaxUps = MAXUPS_DEFAULT;
+			m_DebugMode = toBool(DEBUGMODE_DEFAULT);
 
 			std::stringstream ss;
 
@@ -101,6 +126,11 @@ namespace bas {
 			ss << "Width = " << WIDTH_DEFAULT << ";" << std::endl;
 			ss << "Height = " << HEIGHT_DEFAULT << ";" << std::endl;
 			ss << "Fullscreen = " << FULLSCREEN_DEFAULT << ";" << std::endl;
+			ss << "FixedFps = " << FIXEDFPS_DEFAULT << ";" << std::endl;
+			ss << "MaxFps = " << MAXFPS_DEFAULT << ";" << std::endl;
+			ss << "FixedUps = " << FIXEDUPS_DEFAULT << ";" << std::endl;
+			ss << "MaxUps = " << MAXUPS_DEFAULT << ";" << std::endl;
+			ss << "DebugMode = " << DEBUGMODE_DEFAULT << ";" << std::endl;
 
 			FileIO::setTarget(m_File);
 			FileIO::write(ss.str().c_str());
@@ -121,5 +151,29 @@ namespace bas {
 			return m_Fullscreen;
 		}
 
+		bool Options::getFixedFps()
+		{
+			return m_FixedFps;
+		}
+
+		int Options::getMaxFps()
+		{
+			return m_MaxFps;
+		}
+
+		bool Options::getFixedUps()
+		{
+			return m_FixedUps;
+		}
+
+		int Options::getMaxUps()
+		{
+			return m_MaxUps;
+		}
+
+		bool Options::getDebugMode()
+		{
+			return m_DebugMode;
+		}
 	}
 }

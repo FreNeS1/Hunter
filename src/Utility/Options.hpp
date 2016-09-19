@@ -2,14 +2,6 @@
 
 /*
 * AUTHOR: José Antonio Díaz Mata
-*
-* LICENSE:  This  program  is  free  software; you can redistribute it and/or
-* modify it under the terms of the GNU General Public License as published by
-* the  Free Software Foundation; either version 3 of the License, or (at your
-* option)  any later version. This program is distributed in the hope that it
-* will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
-* of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-* Public License for more details (copy included in program files).
 */
 
 /*
@@ -17,7 +9,6 @@
 * Options are handled manually, and if the values are wrong, it resets the
 * whole file. You can also reset the whole file using repairOptions.
 * For loading the options, you only need to call loadOptions.
-*
 */
 
 #include <sstream>
@@ -33,33 +24,60 @@ namespace bas {
 
 					Options(const char* file);
 			bool	loadOptions();
+			void	repairOptions();
 
+			/* Here go all the calls for the options */
 			int		getWidth();
 			int		getHeight();
 			bool	getFullscreen();
-			void	repairOptions();
+			bool	getFixedFps();
+			int		getMaxFps();
+			bool	getFixedUps();
+			int		getMaxUps();
+			bool	getDebugMode();
 
 		private:
 			bool	getFromFile();
 			bool	getContents(std::string *contents);
+			int		getValue(int location, std::string* contents);
 
 		private:
 			const char* m_File;
-			std::size_t m_Indeces[50];
-			std::size_t start;
-			std::size_t end;
+			std::size_t m_Indeces[50]; // Can manage up to 50 options
+			std::size_t m_Start;
+			std::size_t m_End;
 
+			// HERE GO ALL THE OPTIONS
+
+			/* Name for each */
 			int			m_Height;
 			int			m_Width;
 			bool		m_Fullscreen;
+			bool		m_FixedFps;
+			int			m_MaxFps;
+			bool		m_FixedUps;
+			int			m_MaxUps;
+			bool		m_DebugMode;
 
+			/* Order of aperance */
 			const int	WIDTH_LOCATION = 0;
 			const int	HEIGHT_LOCATION = 1;
 			const int	FULLSCREEN_LOCATION = 2;
-
-			const char*	WIDTH_DEFAULT = "1024";
-			const char*	HEIGHT_DEFAULT = "720";
+			const int	FIXEDFPS_LOCATION = 3;
+			const int	MAXFPS_LOCATION = 4;
+			const int	FIXEDUPS_LOCATION = 5;
+			const int	MAXUPS_LOCATION = 6;
+			const int	DEBUGMODE_LOCATION = 7;
+			
+			/* Defaults in case of error */
+			const int	WIDTH_DEFAULT = 1024;
+			const int	HEIGHT_DEFAULT = 720;
 			const int	FULLSCREEN_DEFAULT = 0;
+			const int	FIXEDFPS_DEFAULT = 0;
+			const int	MAXFPS_DEFAULT = 100;
+			const int	FIXEDUPS_DEFAULT = 0;
+			const int	MAXUPS_DEFAULT = 200;
+			const int	DEBUGMODE_DEFAULT = 0;
 		};
 
 	}
