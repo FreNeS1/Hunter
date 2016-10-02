@@ -14,6 +14,8 @@
 namespace bas {
 	namespace utils {
 
+		class FileLogger;
+
 		class FileIO
 		{
 		public:

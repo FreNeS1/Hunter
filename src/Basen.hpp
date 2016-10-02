@@ -17,7 +17,6 @@ namespace bas {
 
 	private:
 		void	processEvents();
-		void	updateStatistics();
 		void	handleInput(sf::Keyboard::Key key, bool isPressed);
 		void	update(sf::Time dt);
 		void	render();

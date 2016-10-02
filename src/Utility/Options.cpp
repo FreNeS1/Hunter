@@ -122,7 +122,7 @@ namespace bas {
 
 			std::stringstream ss;
 
-			ss << "Options file. Modify values at your onw risk." << std::endl << std::endl;
+			ss << "Options file. Modify values at your onw risk." << std::endl;
 			ss << "Width = " << WIDTH_DEFAULT << ";" << std::endl;
 			ss << "Height = " << HEIGHT_DEFAULT << ";" << std::endl;
 			ss << "Fullscreen = " << FULLSCREEN_DEFAULT << ";" << std::endl;
@@ -130,7 +130,7 @@ namespace bas {
 			ss << "MaxFps = " << MAXFPS_DEFAULT << ";" << std::endl;
 			ss << "FixedUps = " << FIXEDUPS_DEFAULT << ";" << std::endl;
 			ss << "MaxUps = " << MAXUPS_DEFAULT << ";" << std::endl;
-			ss << "DebugMode = " << DEBUGMODE_DEFAULT << ";" << std::endl;
+			ss << "DebugMode = " << DEBUGMODE_DEFAULT << ";";
 
 			FileIO::setTarget(m_File);
 			FileIO::write(ss.str().c_str());

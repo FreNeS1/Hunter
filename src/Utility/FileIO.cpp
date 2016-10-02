@@ -19,13 +19,17 @@ namespace bas {
 				os.write(text, strlen(text));
 				if (!os)
 				{
-					//ERROR WRITING TO FILE!
+					std::stringstream ss;
+					ss << "Could not write on the file " << m_Target;
+					FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
 					return false;
 				}
 				os.close();
 				return true;
 			}
-			// ERROR OPENING FILE!
+			std::stringstream ss;
+			ss << "Could not open file at " << m_Target;
+			FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
 			return false;
 		}
 
@@ -35,22 +39,26 @@ namespace bas {
 
 			if (is) {
 				is.seekg(0, is.end);
-				int length = is.tellg();
+				int length = (int) is.tellg();
 				is.seekg(0, is.beg);
 
 				char * buffer = new char[length];
-				is.read(buffer, length);
+				is.read(buffer, length - 1);
 
-				if (!is)
+				/*if (!is) // What is happening here I don't know, 
 				{
-					// ERROR READING!
-				}
+					std::stringstream ss;
+					ss << "Could not read file at " << m_Target;
+					FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
+				}*/
 				is.close();
 				std::string contents = buffer;
 				delete[] buffer;
 				return contents;
 			}
-			// ERROR OPENING FILE!
+			std::stringstream ss;
+			ss << "Could not open file at " << m_Target;
+			FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
 			return "";
 		}
 
@@ -63,13 +71,17 @@ namespace bas {
 				os.write(text, strlen(text));
 				if (!os)
 				{
-					// ERROR WRITING!
+					std::stringstream ss;
+					ss << "Could not write on the file " << m_Target;
+					FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
 					return false;
 				}
 				os.close();
 				return true;
 			}
-			// ERROR OPENING FILE!
+			std::stringstream ss;
+			ss << "Could not open file at " << m_Target;
+			FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
 			return false;
 		}
 
@@ -84,14 +96,18 @@ namespace bas {
 
 				if (!os)
 				{
-					// ERROR WRITING!
+					std::stringstream ss;
+					ss << "Could not write on the file " << m_Target;
+					FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
 					return false;
 				}
 
 				os.close();
 				return true;
 			}
-			// ERROR OPENING FILE!
+			std::stringstream ss;
+			ss << "Could not open file at " << m_Target;
+			FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
 			return false;
 		}
 
@@ -106,7 +122,9 @@ namespace bas {
 
 				if (!is)
 				{
-					// ERROR READING!
+					std::stringstream ss;
+					ss << "Could not read file at " << m_Target;
+					FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
 				}
 
 				is.close();
@@ -114,7 +132,9 @@ namespace bas {
 				delete[] buffer;
 				return contents;
 			}
-			// ERROR OPENING FILE!
+			std::stringstream ss;
+			ss << "Could not open file at " << m_Target;
+			FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
 			return "";
 		}
 	}

@@ -8,11 +8,16 @@ MAIN THINGS
 - Figure out and comment nodes
 - Get the required input for mouse and controllers and create default input patterns.
 
+
 CLEANING UP
 
 - Profile that shit
-- Logs need to be more clean, create a file with time and date, and put them in a folder.
-- Add log interaction in fileIO.
+- Find a way to put logs in a folder.
+
+
+BUGS
+
+- utils::FileIO -> ifstream returns true for some reason, so disabled checking if read is ok.
 
 
 NEXT PUSH
