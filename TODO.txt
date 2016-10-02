@@ -1,5 +1,6 @@
 MAIN THINGS
 
+- Add a randomizer
 - Do mouse input.
 - Physics (colisions).
 - Finish the button test class.

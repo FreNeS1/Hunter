@@ -18,6 +18,9 @@ namespace bas {
 		else
 			utils::FileLogger::Log(utils::FileLogger::LogType::LOG_WARNING, "Options file corrupt, back to defaults");
 
+		/* We initialize the random at seed 0*/
+		utils::Randomizer::SetSeed(0);
+
 		/* Then, we create the window and load the default world */
 		m_Window = new sf::RenderWindow();
 		if (m_Options.getFullscreen())

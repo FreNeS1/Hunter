@@ -1,4 +1,3 @@
-
 #include "Options.hpp"
 
 namespace bas {
