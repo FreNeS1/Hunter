@@ -1,10 +1,9 @@
 Options file. Modify values at your onw risk.
-
 Width = 1024;
 Height = 720;
 Fullscreen = 0;
-FixedFps = 0;
-MaxFps = 100;
+FixedFps = 1;
+MaxFps = 120;
 FixedUps = 0;
 MaxUps = 200;
 DebugMode = 1;

@@ -1,26 +1,22 @@
+NEXT PUSH
+
+0.2.0 - Test World is done and all nodes are implemented.
+0.3.0 - Input is implemented and fully controller support.
+0.4.0 - Implemented some entity classes and can play arround a bit with sound.
+
+
 MAIN THINGS
 
-- Add a randomizer
-- Do mouse input.
-- Physics (colisions).
-- Finish the button test class.
-- Figure out what is going on when managing resources (includes).
-- Make a testing world and a testing menu world. Then delete instructions.txt.
+0.2.0
 - Figure out and comment nodes
+- Make a testing world and a testing menu world. Then delete instructions.txt.
+
+
+0.3.0
+- Do mouse input.
 - Get the required input for mouse and controllers and create default input patterns.
 
 
-CLEANING UP
-
-- Profile that shit
-- Find a way to put logs in a folder.
-
-
-BUGS
-
-- utils::FileIO -> ifstream returns true for some reason, so disabled checking if read is ok.
-
-
-NEXT PUSH
-
-- Whenever I feel the project is actually clean.
+0.4.0
+- Finish some test entities.
+- Add sound and music nodes.

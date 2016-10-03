@@ -10,7 +10,7 @@ namespace bas {
 		, m_Input()
 	{
 		/* First, we start up the logger and it's clock */
-		utils::FileLogger::Set(version, false);
+		utils::FileLogger::Set(version);
 
 		/* First, we have to handle the settings */
 		if (m_Options.loadOptions())

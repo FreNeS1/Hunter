@@ -5,163 +5,196 @@ namespace bas {
 
 		namespace fs = boost::filesystem;
 
-		fs::path m_Target = "noTarget";
+		fs::path FileIO::m_Target("noTarget");
 
 		void FileIO::setTarget(const char* target)
 		{
 			m_Target = target;
 		}
 
-		bool FileIO::PrepareFile()	// Returns 1 when the file is ready
+		bool FileIO::write(const char* text)
+		{
+			if (PrepareFile())
+				if (FileIO::fWrite(text, -1, -1, std::ofstream::out))
+					return true;
+
+			return false;
+		}
+
+		bool FileIO::swap(int location, int length, const char* text)
+		{
+			std::string aux;
+
+			if (!fRead(-1, -1, &aux))
+				return false;
+
+			aux.replace(location, length, text);
+			const char* out = aux.c_str();
+
+			if (PrepareFile())
+				if (FileIO::fWrite(out, -1, -1, std::ofstream::out))
+					return true;
+
+			return false;
+		}
+
+		bool FileIO::append(const char* text)
+		{
+			if (PrepareFile())
+				if (FileIO::fWrite(text, -1, -1, std::ofstream::app))
+					return true;
+
+			return false;
+		}
+
+		std::string FileIO::read()
+		{
+			std::string aux;
+
+			if (!fRead(-1, -1, &aux))
+				return "";
+			else
+				return aux;
+		}
+
+		std::string FileIO::read(int location, int length)
+		{
+			std::string aux;
+
+			if (!fRead(location, length, &aux))
+				return "";
+			else
+				return aux;
+		}
+
+
+		/* Internal functions */
+
+		bool FileIO::PrepareFile()	// Returns true if the file is capable of being writen to
 		{
 			if (fs::exists(m_Target))
 			{
 				if (fs::is_regular_file(m_Target))
+					return true;
+				else
 				{
-					return 1;
+					std::string aux2 = m_Target.string();
+
+					std::stringstream ss;
+					ss << "Could not create or open file at " << m_Target;			
+					FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
+					
+					setTarget(aux2.c_str());
+					return false;
 				}
-				return 0;
 			}
 			else
 			{
 				std::string aux = m_Target.string();
 				std::size_t found = 0;
 				found = aux.find_last_of("/\\");
-				
+
+				if (found > aux.size())
+					return true;
+
 				if (fs::exists(fs::path(aux.substr(0, found))))
-					return 1;
-				
+					return true;
+
 				fs::create_directories(fs::path(aux.substr(0, found)));
-				return 1;
+
+				std::stringstream ss;
+				ss << "Could not find file folder, creating folder at " << aux.substr(0, found);
+				FileLogger::Log(FileLogger::LogType::LOG_INFO, ss.str().c_str());
+
+				setTarget(aux.c_str());
+				return true;
 			}
 		}
 
-		bool FileIO::write(const char* text)
+		bool FileIO::fWrite(const char* text, int location, int length, int mode)
 		{
-			std::ofstream os(m_Target.string());
+			std::ofstream os(m_Target.string(), mode);
 
 			if (os)
 			{
-				os.write(text, strlen(text));
-				if (!os)
-				{
-					std::stringstream ss;
-					ss << "Could not write on the file " << m_Target;
-					FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
-					return false;
-				}
+				if (location != -1)
+					os.seekp(location);
+
+				if (length != -1)
+					os.write(text, length);
+				else
+					os.write(text, strlen(text));
+
 				os.close();
 				return true;
 			}
+
+			std::string aux2 = m_Target.string();
+
 			std::stringstream ss;
-			ss << "Could not open file at " << m_Target;
+			ss << "Could not write file at " << m_Target;
 			FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
+
+			setTarget(aux2.c_str());
 			return false;
 		}
 
-		std::string FileIO::read()
+		bool FileIO::fRead(int location, int length, std::string* text)
 		{
+			if ((length < 0 && length != -1) || (location < 0 && location != -1))
+			{
+				std::string aux2 = m_Target.string();
+
+				std::stringstream ss;
+				ss << "Invalid location or length reading file at " << m_Target;
+				FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
+
+				setTarget(aux2.c_str());
+				return false;
+			}
+
 			std::ifstream is(m_Target.string());
 
 			if (is) {
 				is.seekg(0, is.end);
-				int length = (int) is.tellg();
-				is.seekg(0, is.beg);
+				int end = (int)is.tellg();
 
-				char * buffer = new char[length];
-				is.read(buffer, length - 1);
+				if (length > end || length == -1)
+					length = end;
 
-				if (!is) // What is happening here I don't know,
+				char * buffer;
+
+				if (location != -1)
 				{
-					std::stringstream ss;
-					ss << "Could not read file at " << m_Target;
-					FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
+					is.seekg(location, is.beg);
+					buffer = new char[length + 1];
+					is.read(buffer, length);
+					buffer[length] = '\0';
+					is.close();
 				}
-				is.close();
-				std::string contents = buffer;
+				else
+				{
+					is.seekg(0, is.beg);
+					buffer = new char[length + 1];
+					is.read(buffer, length);
+					buffer[length] = '\0';
+					is.close();
+				}
+
+				*text = buffer;
 				delete[] buffer;
-				return contents;
-			}
-			std::stringstream ss;
-			ss << "Could not open file at " << m_Target;
-			FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
-			return "";
-		}
 
-		bool FileIO::append(const char* text)
-		{
-			std::ofstream os(m_Target.string(), std::ofstream::app);
-
-			if (os)
-			{
-				os.write(text, strlen(text));
-				if (!os)
-				{
-					std::stringstream ss;
-					ss << "Could not write on the file " << m_Target;
-					FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
-					return false;
-				}
-				os.close();
 				return true;
 			}
+
+			std::string aux2 = m_Target.string();
+
 			std::stringstream ss;
-			ss << "Could not open file at " << m_Target;
+			ss << "Could not open or read file at " << m_Target;
 			FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
+			
+			setTarget(aux2.c_str());
 			return false;
-		}
-
-		bool FileIO::write(int location, int length, const char* text)
-		{
-			std::ofstream os(m_Target.string());
-
-			if (os)
-			{
-				os.seekp(location);
-				os.write(text, length);
-
-				if (!os)
-				{
-					std::stringstream ss;
-					ss << "Could not write on the file " << m_Target;
-					FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
-					return false;
-				}
-
-				os.close();
-				return true;
-			}
-			std::stringstream ss;
-			ss << "Could not open file at " << m_Target;
-			FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
-			return false;
-		}
-
-		std::string FileIO::read(int location, int length)
-		{
-			std::ifstream is(m_Target.string());
-
-			if (is) {
-				char * buffer = new char[length];
-				is.seekg(location);
-				is.read(buffer, length);
-
-				if (!is)
-				{
-					std::stringstream ss;
-					ss << "Could not read file at " << m_Target;
-					FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
-				}
-
-				is.close();
-				std::string contents = buffer;
-				delete[] buffer;
-				return contents;
-			}
-			std::stringstream ss;
-			ss << "Could not open file at " << m_Target;
-			FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
-			return "";
 		}
 	}
 }

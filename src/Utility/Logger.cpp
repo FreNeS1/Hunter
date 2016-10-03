@@ -14,10 +14,6 @@ namespace bas {
 			m_NumErrors = 0U;
 			m_Clock.restart();
 
-			/*boost::filesystem::path dir("newdir");
-			if (boost::filesystem::create_directory(dir))
-				std::cout << "Success" << "\n";
-			*/
 			if (useDate)
 			{
 				std::stringstream temp;
@@ -25,7 +21,7 @@ namespace bas {
 				time_t t = time(0);		//time now
 				struct tm now;
 				localtime_s(&now, &t);
-				temp << "log " << (now.tm_year + 1900) << '-' << (now.tm_mon + 1) << '-' << now.tm_mday
+				temp << "logs/log " << (now.tm_year + 1900) << '-' << (now.tm_mon + 1) << '-' << now.tm_mday
 					<< '-' << now.tm_hour << '-' << now.tm_min << '-' << now.tm_sec << ".log";
 				m_File = temp.str().c_str();
 			}
