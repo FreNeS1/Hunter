@@ -18,6 +18,7 @@ namespace bas {
 	private:
 		void	processEvents();
 		void	handleInput(sf::Keyboard::Key key, bool isPressed);
+		void    handleMouse(sf::Mouse::Button button, bool isPressed);
 		void	update(sf::Time dt);
 		void	render();
 
@@ -29,7 +30,6 @@ namespace bas {
 		Input				m_Input;
 
 		const char*			m_Name;
-		bool				m_IsFocused;
 
 		/* DEBUG */
 		sf::Time			m_DebugTick = sf::seconds(1);

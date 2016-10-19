@@ -1,16 +1,15 @@
 NEXT PUSH
 
-0.2.0 - Test World is done and all nodes are implemented.
+0.1.0 - Clean up and get ready to start.
+0.2.0 - Test Menu World is done and all nodes are implemented.
 0.3.0 - Input is implemented and fully controller support.
 0.4.0 - Implemented some entity classes and can play arround a bit with sound.
+ ---  GET SOMEONE TO DO THE ART STUFF (meanwhile use interwebz)  ---
+0.5.0 - Make a playable character.
+0.6.0 - Make a testing world and refine the character's parameters
 
 
 MAIN THINGS
-
-0.2.0
-- Figure out and comment nodes
-- Make a testing world and a testing menu world. Then delete instructions.txt.
-
 
 0.3.0
 - Do mouse input.
@@ -20,3 +19,15 @@ MAIN THINGS
 0.4.0
 - Finish some test entities.
 - Add sound and music nodes.
+
+
+KNOWN CORRECTIONS
+
+- When using a new font, and it's height is weird, it's necesary to change its data on the TextNode class.
+- When adding an input, you need to add it to the configs and the enum. 
+
+
+KNOWN ERRORS
+
+- Fullscreening acts weird, and I think there is a problem with windows and SFML compatibility.
+- If you try to initialize a buttonArray with more buttons than created, you will get a Write Access Violation.

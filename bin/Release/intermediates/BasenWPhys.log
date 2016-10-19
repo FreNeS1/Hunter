@@ -1,18 +1,9 @@
 ﻿  Basen.cpp
-  Button.cpp
-  AnimationNode.cpp
-  BaseNode.cpp
-  DynamicNode.cpp
-  SpriteNode.cpp
-  TextNode.cpp
-  Input.cpp
-  Options.cpp
-  FileIO.cpp
-  Logger.cpp
-  World.cpp
-  Starter.cpp
+     Creating library C:\Users\josea\Programming\Source\Repos\Hunter\bin\Release\BasenWPhys.lib and object C:\Users\josea\Programming\Source\Repos\Hunter\bin\Release\BasenWPhys.exp
   Generating code
-  All 394 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  2 of 1143 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    46 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   BasenWPhys.vcxproj -> C:\Users\josea\Programming\Source\Repos\Hunter\bin\Release\BasenWPhys.exe
   BasenWPhys.vcxproj -> C:\Users\josea\Programming\Source\Repos\Hunter\bin\Release\BasenWPhys.pdb (Full PDB)

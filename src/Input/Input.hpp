@@ -21,7 +21,7 @@ namespace bas {
 
 #define NUM_TRIGGERS 3
 
-	enum class Type /* This sets the basic offset of the input code */
+	enum class InputType /* This sets the basic offset of the input code */
 	{
 		Keyboard = 0,
 		Mouse = sf::Keyboard::KeyCount,
@@ -38,6 +38,7 @@ namespace bas {
 		DEFEND,
 		JUMP,
 		ACTION,
+		ENTER,
 		TOTAL
 	};
 
@@ -51,7 +52,8 @@ namespace bas {
 			/* ATTACK */{ sf::Keyboard::Q ,		-2, -2 },
 			/* DEFEND */{ sf::Keyboard::E ,		-2, -2 },
 			/* JUMP */	{ sf::Keyboard::Space,	-2, -2 },
-			/* ACTION */{ sf::Keyboard::F,		-2, -2 }
+			/* ACTION */{ sf::Keyboard::F,		-2, -2 },
+			/* ENTER */ { sf::Keyboard::Return, (int)InputType::Mouse + sf::Mouse::Left, -2 }
 		};
 	}
 
@@ -61,16 +63,21 @@ namespace bas {
 				Input();
 		void	load();
 
-		void	set(Type type, int code, bool value);
-		void	set2D(Type type, int dx, int dy);
+		void	set(InputType type, int code, bool value);
+		void	setMouse(int x, int y);
+		void	setFocused(bool focus);
 
 		bool	getInput(int k);
 		bool	getPress(int k);
 		bool	getRelease(int k);
+		int		getMouseX();
+		int		getMouseY();
+		bool	getFocused();
+		
 		void	clear();
 		
 	private:
-		int		getCode(Type type, int k);
+		int		getCode(InputType type, int k);
 
 	private:
 		int 	m_Triggers[(int)Action::TOTAL][NUM_TRIGGERS];
@@ -78,8 +85,10 @@ namespace bas {
 		bool	m_Input[(int)Action::TOTAL];
 		int		m_Flank[(int)Action::TOTAL];
 
-		int		m_Dx;
-		int		m_Dy;
+		bool	m_Focused;
+
+		int		m_MouseX;
+		int		m_MouseY;
 	};
 
 }

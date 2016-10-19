@@ -3,8 +3,7 @@
 namespace bas {
 
 	Basen::Basen(const char* name, const char* title, const char* version)
-		: m_IsFocused(true)
-		, m_Name(name)
+		: m_Name(name)
 		, m_DebugTitle(name)
 		, m_Options("Options.stg")
 		, m_Input()
@@ -21,19 +20,39 @@ namespace bas {
 		/* We initialize the random at seed 0*/
 		utils::Randomizer::SetSeed(0);
 
+		auto vms = sf::VideoMode::getFullscreenModes();
+
 		/* Then, we create the window and load the default world */
 		m_Window = new sf::RenderWindow();
 		if (m_Options.getFullscreen())
-			m_Window->create(sf::VideoMode(m_Options.getWidth(), m_Options.getHeight()), title, sf::Style::Fullscreen);
+		{
+			sf::VideoMode vm = sf::VideoMode::getDesktopMode();
+			if (vm.isValid())
+				m_Window->create(vm, title, sf::Style::Fullscreen);
+			else
+			{
+				utils::FileLogger::Log(utils::FileLogger::LogType::LOG_WARNING, "Fullscreen mode not suported, starting windowed");
+				m_Window->create(vm, title, sf::Style::Close);
+			}
+		}
 		else
-			m_Window->create(sf::VideoMode(m_Options.getWidth(), m_Options.getHeight()), title, sf::Style::Close);
-
+		{
+			if (m_Options.getWidth() == sf::VideoMode::getDesktopMode().width && m_Options.getHeight() == sf::VideoMode::getDesktopMode().height)
+				m_Window->create(sf::VideoMode(m_Options.getWidth(), m_Options.getHeight()), title, sf::Style::None);
+			else
+				m_Window->create(sf::VideoMode(m_Options.getWidth(), m_Options.getHeight()), title, sf::Style::Close);
+		}
+		
 		if (m_Options.getDebugMode())
 			utils::FileLogger::Log(utils::FileLogger::LogType::LOG_DEBUG, "Window created");
 
 		/* Now we only need to load the current world and request focus for the game*/
-		m_CurrentWorld = new World(m_Window, &m_Input);
+		m_CurrentWorld = new MenuWorld(m_Window, &m_Input);
 		m_CurrentWorld->build();
+
+		if (m_Options.getDebugMode())
+			utils::FileLogger::Log(utils::FileLogger::LogType::LOG_DEBUG, "World loaded");
+
 		m_Window->requestFocus();
 	}
 
@@ -122,20 +141,36 @@ namespace bas {
 		{
 			switch (event.type)
 			{
+			case sf::Event::MouseButtonPressed:
+				handleMouse(event.mouseButton.button, true);
+				break;
+
+			case sf::Event::MouseButtonReleased:
+				handleMouse(event.mouseButton.button, false);
+				break;
+
 			case sf::Event::KeyPressed:
 				handleInput(event.key.code, true);
 				break;
+
 			case sf::Event::KeyReleased:
 				handleInput(event.key.code, false);
 				break;
+
 			case sf::Event::Closed:
 				m_Window->close();
 				break;
+
 			case sf::Event::GainedFocus:
-				m_IsFocused = true;
+				m_Input.setFocused(true);
 				break;
+
 			case sf::Event::LostFocus:
-				m_IsFocused = false;
+				m_Input.setFocused(false);
+				break;
+
+			case sf::Event::MouseMoved:
+				m_Input.setMouse(event.mouseMove.x, event.mouseMove.y);
 				break;
 			}
 		}
@@ -143,11 +178,8 @@ namespace bas {
 
 	void Basen::update(sf::Time deltaTime)
 	{
-		if (m_IsFocused)
-		{
-			m_CurrentWorld->update(deltaTime);
-			m_Input.clear();
-		}
+		m_CurrentWorld->update(deltaTime);
+		m_Input.clear();
 	}
 
 	void Basen::render()
@@ -156,30 +188,22 @@ namespace bas {
 		m_CurrentWorld->draw();
 
 		if (m_Options.getDebugMode())
-			m_Window->setTitle(m_DebugTitle);
+		{
+			std::stringstream ss;
+			ss << m_DebugTitle << '\0';
+			m_Window->setTitle(ss.str().c_str());
+		}
 
 		m_Window->display();
 	}
 
 	void Basen::handleInput(sf::Keyboard::Key key, bool isPressed)
 	{
-		m_Input.set(Type::Keyboard, key, isPressed);
+		m_Input.set(InputType::Keyboard, key, isPressed);
+	}
+
+	void Basen::handleMouse(sf::Mouse::Button key, bool isPressed)
+	{
+		m_Input.set(InputType::Mouse, key, isPressed);
 	}
 }
-
-/*
-void Game::updateStatistics(sf::Time elapsedTime)
-{
-	mStatisticsUpdateTime += elapsedTime;
-	mStatisticsNumFrames += 1;
-
-	if (mStatisticsUpdateTime >= sf::seconds(1.0f))
-	{
-		mStatisticsText.setString(
-			"Frames / Second = " + std::to_string(mStatisticsNumFrames) + "\n" +
-			"Time / Update = " + std::to_string((mStatisticsUpdateTime.asMicroseconds() / mStatisticsNumFrames)) + "us");
-
-		mStatisticsUpdateTime -= sf::seconds(1.0f);
-		mStatisticsNumFrames = 0;
-	}
-}*/

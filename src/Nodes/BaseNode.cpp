@@ -5,6 +5,7 @@ namespace bas {
 	BaseNode::BaseNode()
 		: m_Children()
 		, m_Parent(nullptr)
+		, m_Active(true)
 	{ }
 
 	void BaseNode::attachChild(Ptr newChild)
@@ -18,26 +19,61 @@ namespace bas {
 		auto found = std::find_if(m_Children.begin(), m_Children.end(),
 			[&](Ptr& p) -> bool {return (&node == p.get()); });
 
-		assert(found != m_Children.end());	// Never use unborn children for anything
-
-		Ptr result = std::move(*found);
-		result->m_Parent = nullptr;
-		m_Children.erase(found);
-		return result;
+		if (found != m_Children.end())		// Never use unknown children
+		{
+			Ptr result = std::move(*found);
+			result->m_Parent = nullptr;
+			m_Children.erase(found);
+			return result;
+		}
+		else
+		{
+			utils::FileLogger::Log(utils::FileLogger::LogType::LOG_ERROR, "Trying to detatch an unknow child from a parent!");
+			return nullptr;
+		}
 	}
 
+	bool BaseNode::setActive(bool active)
+	{
+		if (m_Parent != nullptr)
+		{
+			if (m_Parent->getActive())
+			{
+				m_Active = active;
+				return true;
+			}
+			else
+				return false;
+		}
+		else
+		{
+			m_Active = active;
+			return true;
+		}				
+	}
+
+	bool BaseNode::getActive()
+	{
+		return m_Active;
+	}
 
 	void BaseNode::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
-		states.transform *= getTransform();
-		drawCurrent(target, states);
-		drawChildren(target, states);
+		if (m_Active)
+		{
+			states.transform *= getTransform();
+			drawCurrent(target, states);
+			drawChildren(target, states);
+		}
 	}
 
 	void BaseNode::update(sf::Time dt)
 	{
-		updateCurrent(dt);
-		updateChildren(dt);
+		if (m_Active)
+		{
+			updateCurrent(dt);
+			updateChildren(dt);
+		}
 	}
 
 
@@ -77,5 +113,4 @@ namespace bas {
 	{
 		return getWorldTransform() * sf::Vector2f();
 	}
-
 }

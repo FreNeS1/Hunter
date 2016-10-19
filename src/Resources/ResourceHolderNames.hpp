@@ -2,8 +2,20 @@ namespace bas {
 
 	namespace Textures
 	{
-		enum ID	
+		enum ID
 		{
+			/* MENU */
+			Background,
+			Mouse,
+			Button1,
+			Button2,
+			Button3,
+			Button4,
+			Button5,
+			Button6,
+			Button7,
+
+			/* DEBUG*/
 			Debug1,
 			Debug2,
 			Debug3,
@@ -16,6 +28,7 @@ namespace bas {
 	{
 		enum ID
 		{
+			Prototype,
 			Debug1,
 			Debug2,
 			Debug3,

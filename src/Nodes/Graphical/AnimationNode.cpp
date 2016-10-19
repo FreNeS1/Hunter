@@ -3,10 +3,11 @@
 namespace bas {
 
 	AnimationNode::AnimationNode(const sf::Texture& texture, int frameWidth, int height, int frames, float duration, bool loop)
-		: SpriteNode(texture) /*Sprite is being set 2 times*/
+		: SpriteNode(texture)
 		, m_ElapsedTime()
 		, m_AnimDuration(duration)
 		, m_Frames(frames)
+		, m_CurrentFrame(0)
 		, m_FrameWidth(frameWidth)
 		, m_Height(height)
 		, m_Loop(loop)
@@ -29,10 +30,14 @@ namespace bas {
 			else
 			{
 				animFrame = m_Frames - 1;
-				m_ElapsedTime = m_AnimDuration * 1.2f;
+				m_ElapsedTime = m_AnimDuration * 1.2f;	// Avoids overflow
 			}
 		}
 
-		m_Sprite.setTextureRect(sf::IntRect(animFrame * m_FrameWidth, 0, m_FrameWidth, m_Height));
+		if (animFrame != m_CurrentFrame)
+		{
+			m_CurrentFrame = animFrame;
+			m_Sprite.setTextureRect(sf::IntRect(animFrame * m_FrameWidth, 0, m_FrameWidth, m_Height));
+		}
 	}
 }

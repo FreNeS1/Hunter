@@ -3,6 +3,9 @@
 namespace bas {
 
 	Input::Input()
+		: m_Focused(true)
+		, m_MouseX(0)
+		, m_MouseY(0)
 	{
 		load();
 	}
@@ -18,7 +21,7 @@ namespace bas {
 		}
 	}
 
-	void Input::set(Type type, int code, bool value)
+	void Input::set(InputType type, int code, bool value)
 	{
 		int Icode = getCode(type, code);
 
@@ -41,9 +44,15 @@ namespace bas {
 		}
 	}
 
-	void Input::set2D(Type type, int dx, int dy)
+	void Input::setMouse(int x, int y)
 	{
-		/* Fil dis pls */
+		m_MouseX = x;
+		m_MouseY = y;
+	}
+
+	void Input::setFocused(bool focus)
+	{
+		m_Focused = focus;
 	}
 
 	bool Input::getInput(int k)
@@ -61,13 +70,28 @@ namespace bas {
 		return m_Flank[k] == -1;
 	}
 
+	int Input::getMouseX()
+	{
+		return m_MouseX;
+	}
+
+	int Input::getMouseY()
+	{
+		return m_MouseY;
+	}
+
+	bool Input::getFocused()
+	{
+		return m_Focused;
+	}
+
 	void Input::clear()
 	{
 		for (int i = 0; i < (int)Action::TOTAL; i++)
 			m_Flank[i] = 0;
 	}
 
-	int Input::getCode(Type type, int k)
+	int Input::getCode(InputType type, int k)
 	{
 		return (int)type + k;
 	}

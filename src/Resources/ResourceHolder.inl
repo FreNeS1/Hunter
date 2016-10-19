@@ -3,9 +3,13 @@ void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string
 {
 	std::unique_ptr<Resource> res(new Resource);
 	if (!res->loadFromFile(filename))
-		utils::FileLogger::Log(utils::FileLogger::LogType::LOG_ERROR, "Failed to load resource at " + filename);
-
-	insertResource(id, std::move(res));
+	{
+		std::stringstream ss;
+		ss << "Failed to load resource at \"" << filename << "\"";
+		utils::FileLogger::Log(utils::FileLogger::LogType::LOG_ERROR, ss.str().c_str());
+	}
+	else
+		insertResource(id, std::move(res));
 }
 
 template <typename Resource, typename Identifier>
@@ -14,9 +18,13 @@ void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string
 {
 	std::unique_ptr<Resource> res(new Resource);
 	if (!res->loadFromFile(filename, secondParam))
-		utils::FileLogger::Log(utils::FileLogger::LogType::LOG_ERROR, "Failed to load resource at" + filename);
-
-	insertResource(id, std::move(res));
+	{
+		std::stringstream ss;
+		ss << "Failed to load resource at \"" << filename << "\"";
+		utils::FileLogger::Log(utils::FileLogger::LogType::LOG_ERROR, ss.str().c_str());
+	}
+	else
+		insertResource(id, std::move(res));
 }
 
 template <typename Resource, typename Identifier>
