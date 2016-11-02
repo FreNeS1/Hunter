@@ -14,6 +14,9 @@
 
 #include "../BaseNode.hpp"
 
+#include "../../Resources/ResourceHolder.hpp"
+#include "../../Resources/ResourceHolderNames.hpp"
+
 namespace bas {
 
 	class SpriteNode : public BaseNode

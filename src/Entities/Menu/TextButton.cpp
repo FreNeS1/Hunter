@@ -3,11 +3,9 @@
 namespace bas {
 
 	TextButton::TextButton(const sf::Font& font, std::string text, int size, sf::Color unactive, sf::Color highlighted, sf::Color pressed, sf::Color active)
+		: Button()
 	{
-		m_Stated = false;
-		m_Pressed = false;
 		m_Previous = 5;
-		m_State = 0;
 
 		m_Colors[0] = unactive;
 		m_Colors[1] = highlighted;
@@ -24,11 +22,9 @@ namespace bas {
 	}
 
 	TextButton::TextButton(const sf::Font& font, std::string text, float width, float height, sf::Color unactive, sf::Color highlighted, sf::Color pressed, sf::Color active, bool stretch)
+		: Button() 
 	{
-		m_Stated = false;
-		m_Pressed = false;
 		m_Previous = 5;
-		m_State = 0;
 
 		m_Colors[0] = unactive;
 		m_Colors[1] = highlighted;
@@ -38,7 +34,7 @@ namespace bas {
 		std::unique_ptr<TextNode> display(new TextNode(font, 100, unactive));
 		m_Display = display.get();
 		m_Display->setText(text);
-		
+
 		if (stretch)
 			m_Display->getMaxSizeFor(width, height);
 		else

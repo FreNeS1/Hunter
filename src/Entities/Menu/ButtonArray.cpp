@@ -7,6 +7,8 @@ namespace bas {
 		, m_Width(width)
 		, m_Height(height)
 		, m_NumButtons(numButtons)
+		, m_Selected(0)
+		, m_Activation(false)
 	{
 		m_Buttons = new Button*[numButtons];
 
@@ -69,10 +71,83 @@ namespace bas {
 
 	void ButtonArray::Interact(Input* input)
 	{
-		for (int i = 0; i < m_NumButtons; i++)
+		if (input->getMouseUsed())
 		{
-			m_Buttons[i]->Interact(input);
+			m_Selected = 0;
+			m_Activation = true;
+
+			for (int i = 0; i < m_NumButtons; i++)
+				m_Buttons[i]->Interact(input, false, false);
 		}
+		else
+		{
+			if (m_Activation)
+			{
+				m_Selected = 0;
+				m_Activation = false;
+			}
+			else
+			{
+				if (input->getPress((int)Action::UP))
+				{
+					m_Selected--;
+					if (m_Selected == -1)
+						m_Selected = m_NumButtons - 1;
+				}
+
+				if (input->getPress((int)Action::DOWN))
+				{
+					m_Selected++;
+					if (m_Selected == m_NumButtons)
+						m_Selected = 0;
+				}
+
+				for (int i = 0; i < m_NumButtons; i++)
+				{
+					if (i == m_Selected)
+						m_Buttons[i]->Interact(input, true, true);
+					else
+						m_Buttons[i]->Interact(input, true, false);
+				}
+			}
+		}
+	}
+
+	bool ButtonArray::getPressed(int i)
+	{
+		if (i < 0, i >= m_NumButtons)
+		{
+			utils::FileLogger::Log(utils::FileLogger::LogType::LOG_WARNING, "Trying to get the state of an unexisting button");
+			return false;
+		}
+		else
+			return m_Buttons[i]->getPressed();
+	}
+
+	bool ButtonArray::getClicked(int i)
+	{
+		if (i < 0, i >= m_NumButtons)
+		{
+			utils::FileLogger::Log(utils::FileLogger::LogType::LOG_WARNING, "Trying to get the state of an unexisting button");
+			return false;
+		}
+		else
+			return m_Buttons[i]->getClicked();
+	}
+
+	void ButtonArray::setPressed(int i, bool state)
+	{
+		if (i < 0, i >= m_NumButtons)
+		{
+			utils::FileLogger::Log(utils::FileLogger::LogType::LOG_WARNING, "Trying to set the state of an unexisting button");
+		}
+		else
+			m_Buttons[i]->setPressed(state);
+	}
+
+	int ButtonArray::getLength()
+	{
+		return m_NumButtons;
 	}
 
 }

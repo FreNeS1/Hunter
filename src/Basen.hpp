@@ -11,11 +11,12 @@ namespace bas {
 	class Basen
 	{
 	public:
-				Basen(const char* name, const char* title, const char* version);
-				~Basen();
+		Basen(const char* name, const char* title, const char* version);
+		~Basen();
 		void	run();
 
 	private:
+		void	changeWorld();
 		void	processEvents();
 		void	handleInput(sf::Keyboard::Key key, bool isPressed);
 		void    handleMouse(sf::Mouse::Button button, bool isPressed);

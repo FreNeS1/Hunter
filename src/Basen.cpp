@@ -20,8 +20,6 @@ namespace bas {
 		/* We initialize the random at seed 0*/
 		utils::Randomizer::SetSeed(0);
 
-		auto vms = sf::VideoMode::getFullscreenModes();
-
 		/* Then, we create the window and load the default world */
 		m_Window = new sf::RenderWindow();
 		if (m_Options.getFullscreen())
@@ -47,7 +45,7 @@ namespace bas {
 			utils::FileLogger::Log(utils::FileLogger::LogType::LOG_DEBUG, "Window created");
 
 		/* Now we only need to load the current world and request focus for the game*/
-		m_CurrentWorld = new MenuWorld(m_Window, &m_Input);
+		m_CurrentWorld = Worlds::getStartWorld(m_Window, &m_Input);
 		m_CurrentWorld->build();
 
 		if (m_Options.getDebugMode())
@@ -59,6 +57,7 @@ namespace bas {
 	Basen::~Basen()
 	{
 		/* Delete all the stuff I was using */
+		m_CurrentWorld->CleanWorld();
 		delete m_CurrentWorld;
 		delete m_Window;
 
@@ -85,6 +84,12 @@ namespace bas {
 			m_DebugTimer += timeElapsed;
 			fpsTimer += timeElapsed;
 			upsTimer += timeElapsed;
+
+			if (m_CurrentWorld->getExit())
+				m_Window->close();
+
+			if (m_CurrentWorld->getDelete())
+				changeWorld();
 
 			if (m_Options.getFixedFps())
 			{
@@ -131,6 +136,25 @@ namespace bas {
 				m_DebugUpdates = 0;
 			}
 			processEvents();
+		}
+	}
+
+	void Basen::changeWorld()
+	{
+		int nextWorld = m_CurrentWorld->getNext();
+		
+		m_CurrentWorld->CleanWorld();
+		m_CurrentWorld = nullptr;
+		if (m_Options.getDebugMode())
+			utils::FileLogger::Log(utils::FileLogger::LogType::LOG_DEBUG, "World unloaded.");
+
+		m_CurrentWorld = Worlds::getWorld(nextWorld, m_Window, &m_Input);
+		m_CurrentWorld->build();
+		if (m_Options.getDebugMode())
+		{
+			std::stringstream ss;
+			ss << "World with ID " << nextWorld << " loaded.";
+			utils::FileLogger::Log(utils::FileLogger::LogType::LOG_DEBUG, ss.str().c_str());
 		}
 	}
 

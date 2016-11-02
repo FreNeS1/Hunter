@@ -2,23 +2,15 @@ NEXT PUSH
 
 0.1.0 - Clean up and get ready to start.
 0.2.0 - Test Menu World is done and all nodes are implemented.
-0.3.0 - Input is implemented and fully controller support.
-0.4.0 - Implemented some entity classes and can play arround a bit with sound.
- ---  GET SOMEONE TO DO THE ART STUFF (meanwhile use interwebz)  ---
-0.5.0 - Make a playable character.
-0.6.0 - Make a testing world and refine the character's parameters
+0.3.0 - Implemented some entity classes and can play arround a bit with sound.
+0.4.0 - Define the most basic stage
 
 
 MAIN THINGS
 
-0.3.0
-- Do mouse input.
-- Get the required input for mouse and controllers and create default input patterns.
-
-
 0.4.0
-- Finish some test entities.
-- Add sound and music nodes.
+- .
+- Get the required input for mouse and controllers and create default input patterns.
 
 
 KNOWN CORRECTIONS
@@ -30,4 +22,4 @@ KNOWN CORRECTIONS
 KNOWN ERRORS
 
 - Fullscreening acts weird, and I think there is a problem with windows and SFML compatibility.
-- If you try to initialize a buttonArray with more buttons than created, you will get a Write Access Violation.
+- If you try to initialize an entity with the wrong number of items, you will get a Write Access Violation or memory leak.

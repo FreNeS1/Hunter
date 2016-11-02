@@ -9,6 +9,8 @@ namespace bas {
 		, m_Input(input)
 	{ }
 
+	void World::CleanWorld() { }
+
 	void World::build()
 	{
 		loadResources();
@@ -33,4 +35,18 @@ namespace bas {
 		m_Scene.update(dt);
 	}
 
+	bool World::getDelete()
+	{
+		return m_Delete;
+	}
+	
+	bool World::getExit()
+	{
+		return m_Exit;
+	}
+
+	int World::getNext()
+	{
+		return m_Next;
+	}
 }

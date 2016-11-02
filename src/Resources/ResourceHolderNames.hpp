@@ -1,40 +1,63 @@
+#pragma once
+
 namespace bas {
 
 	namespace Textures
 	{
+		const int MENU[] = { 0, 1 };
+
 		enum ID
 		{
 			/* MENU */
-			Background,
+			MenuBackground,
 			Mouse,
-			Button1,
-			Button2,
-			Button3,
-			Button4,
-			Button5,
-			Button6,
-			Button7,
 
-			/* DEBUG*/
+			/* DEBUG */
 			Debug1,
 			Debug2,
 			Debug3,
-			Debug4,
-			Debug5
+			Debug4
 		};
+
+		static std::string paths[] = { "res/Textures/Space.jpg", "res/Textures/Mouse.png" };
 	}
 
 	namespace Fonts
 	{
+		const int MENU[] = { 0 };
+
 		enum ID
 		{
+			/* MENU */
 			Prototype,
+
+			/* DEBUG */
 			Debug1,
 			Debug2,
 			Debug3,
-			Debug4,
-			Debug5
+			Debug4
 		};
+
+		static std::string paths[] = { "res/Fonts/Prototype.ttf" };
+	}
+
+	namespace Sounds
+	{
+		const int MENU[] = { 0 };
+
+		enum ID
+		{
+			/* MENU */
+			buttonClick,
+
+			/* DEBUG */
+			Debug1,
+			Debug2,
+			Debug3,
+			Debug4
+		};
+
+		static std::string paths[] = { "res/Sound/Button.wav" };
 	}
 }
 
@@ -43,6 +66,7 @@ namespace sf
 	/* forward declaration of all sf classes */
 	class Texture;
 	class Font;
+	class SoundBuffer;
 }
 
 namespace bas {
@@ -51,4 +75,5 @@ namespace bas {
 
 	typedef ResourceHolder<sf::Texture, Textures::ID> TextureHolder;
 	typedef ResourceHolder<sf::Font, Fonts::ID> FontHolder;
+	typedef ResourceHolder<sf::SoundBuffer, Sounds::ID> SoundBufferHolder;
 }

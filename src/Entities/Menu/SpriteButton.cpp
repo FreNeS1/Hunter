@@ -3,9 +3,8 @@
 namespace bas {
 
 	SpriteButton::SpriteButton(const sf::Texture& texture, float width, float height, int stateWidth, int stateHeight)
+		: Button()
 	{
-		m_Stated = false;
-		m_State = 0;
 		m_Width = width;
 		m_Height = height;
 

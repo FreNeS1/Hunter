@@ -10,6 +10,7 @@
 #include <SFML/Graphics/View.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
+#include "WorldNumbers.hpp"
 #include "../Nodes/BaseNode.hpp"
 #include "../Resources/ResourceHolder.hpp"
 #include "../Resources/ResourceHolderNames.hpp"
@@ -21,16 +22,25 @@ namespace bas {
 	{
 	public:
 						World(sf::RenderWindow* window, Input* input);	// Default constructor
+		virtual void	CleanWorld();
 
 		void			build();				// Builds and places the world
 		virtual void	update(sf::Time dt);	// Update method
 		void			draw();					// Draw method
+
+		bool			getDelete();
+		bool			getExit();
+		int				getNext();
 
 	private:
 		virtual void	loadResources();	// At the start of the world, we load it's resources
 		virtual void	buildScene();		// At the start of the world, we create and position all nodes
 
 	protected:
+		bool		m_Delete;
+		bool		m_Exit;
+		int			m_Next;
+
 		sf::RenderWindow*	m_Window;		// The window
 		sf::View			m_WorldView;	// The camera
 		

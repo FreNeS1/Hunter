@@ -39,6 +39,9 @@ namespace bas {
 				{
 					m_Input[i] = value;
 					m_Flank[i] = flank;
+
+					if (i < 4)
+						m_MouseUsed = false;
 				}
 			}
 		}
@@ -48,6 +51,7 @@ namespace bas {
 	{
 		m_MouseX = x;
 		m_MouseY = y;
+		m_MouseUsed = true;
 	}
 
 	void Input::setFocused(bool focus)
@@ -83,6 +87,11 @@ namespace bas {
 	bool Input::getFocused()
 	{
 		return m_Focused;
+	}
+
+	bool Input::getMouseUsed()
+	{
+		return m_MouseUsed;
 	}
 
 	void Input::clear()

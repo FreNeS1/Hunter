@@ -1,7 +1,7 @@
 Options file. Modify values at your onw risk.
-Width = 1920;
-Height = 1080;
-Fullscreen = 0;
+Width = 1280;
+Height = 720;
+Fullscreen = 1;
 FixedFps = 0;
 MaxFps = 120;
 FixedUps = 0;

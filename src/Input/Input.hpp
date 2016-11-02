@@ -70,9 +70,12 @@ namespace bas {
 		bool	getInput(int k);
 		bool	getPress(int k);
 		bool	getRelease(int k);
+
 		int		getMouseX();
 		int		getMouseY();
+
 		bool	getFocused();
+		bool	getMouseUsed();
 		
 		void	clear();
 		
@@ -86,6 +89,7 @@ namespace bas {
 		int		m_Flank[(int)Action::TOTAL];
 
 		bool	m_Focused;
+		bool	m_MouseUsed;
 
 		int		m_MouseX;
 		int		m_MouseY;

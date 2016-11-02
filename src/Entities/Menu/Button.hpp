@@ -4,32 +4,47 @@
 * AUTHOR: José Antonio Díaz Mata
 */
 
-/*
-* USAGE: We asign a number to each state
-*	0 -> idle
-*	1 -> highlighted
-*	2 -> pressed
-*	3 -> active
-*/
-
 #include "../../Nodes/BaseNode.hpp"
 #include "../../Input/Input.hpp"
 
 namespace bas {
 
+
+
 	class Button : public BaseNode
 	{
+	private:
+		enum State
+		{
+			STATE_IDLE,
+			STATE_HIGHLIGHTED,
+			STATE_PRESSED,
+			STATE_ACTIVE
+		};
+
 	public:
-		virtual void	Interact(Input* input);
+						Button();
+		virtual void	Interact(Input* input, bool overriden, bool overrideBounds);
+
+		bool			getClicked();
 		bool			getPressed();
+		void			setPressed(bool state);
+
 		virtual float	getWidth();
 		virtual float	getHeight();
 
-	protected:
-		int			m_State;
-		bool		m_Stated;
+	private:
+		bool			isOnBounds(Input* input);
 
-		bool		m_Pressed;
+	protected:
+		unsigned short	m_State;
+
+	private:
+		bool			m_Stated;
+		int				m_PrevState;
+
+		bool			m_Clicked;
+		bool			m_Pressed;
 	};
 
 }
