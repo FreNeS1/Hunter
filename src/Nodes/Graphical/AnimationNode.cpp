@@ -15,6 +15,11 @@ namespace bas {
 		updateCurrent(sf::Time::Zero);
 	}
 
+	AnimationNode::AnimationNode(const AnimationNode& that)
+	{
+
+	}
+
 	void AnimationNode::updateCurrent(sf::Time dt)
 	{
 		m_ElapsedTime += dt.asSeconds();

@@ -6,7 +6,7 @@ void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string
 	{
 		std::stringstream ss;
 		ss << "Failed to load resource at \"" << filename << "\"";
-		utils::FileLogger::Log(utils::FileLogger::LogType::LOG_ERROR, ss.str().c_str());
+		utils::FileLogger::Log(utils::FileLogger::LogType::LOG_ERROR, ss.str());
 	}
 	else
 		insertResource(id, std::move(res));
@@ -21,7 +21,7 @@ void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string
 	{
 		std::stringstream ss;
 		ss << "Failed to load resource at \"" << filename << "\"";
-		utils::FileLogger::Log(utils::FileLogger::LogType::LOG_ERROR, ss.str().c_str());
+		utils::FileLogger::Log(utils::FileLogger::LogType::LOG_ERROR, ss.str());
 	}
 	else
 		insertResource(id, std::move(res));

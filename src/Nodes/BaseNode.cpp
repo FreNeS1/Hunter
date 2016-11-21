@@ -8,9 +8,32 @@ namespace bas {
 		, m_Active(true)
 	{ }
 
+	BaseNode::BaseNode(const BaseNode& that)
+	{
+		m_Parent = that.m_Parent;
+		m_Children = that.m_Children;
+		m_Active = that.m_Active;
+	}
+
+	BaseNode::~BaseNode()
+	{
+		m_Parent->detachChild(*this);
+	}
+
+	BaseNode& BaseNode::operator=(const BaseNode& that)
+	{
+		if (this != &that)
+		{
+			m_Parent = that.m_Parent;
+			m_Children = that.m_Children;
+			m_Active = that.m_Active;
+		}
+		return *this;
+	}
+
 	void BaseNode::attachChild(Ptr newChild)
 	{
-		newChild->m_Parent = this;
+		newChild->m_Parent = std::make_shared<BaseNode>(this);
 		m_Children.push_back(std::move(newChild));
 	}
 
@@ -19,7 +42,7 @@ namespace bas {
 		auto found = std::find_if(m_Children.begin(), m_Children.end(),
 			[&](Ptr& p) -> bool {return (&node == p.get()); });
 
-		if (found != m_Children.end())		// Never use unknown children
+		if (found != m_Children.end())
 		{
 			Ptr result = std::move(*found);
 			result->m_Parent = nullptr;

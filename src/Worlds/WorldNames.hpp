@@ -1,6 +1,11 @@
 #pragma once
 
+/*
+* AUTHOR: José Antonio Díaz Mata
+*/
+
 #include "CreatedWorlds/MenuWorld.hpp"
+#include "CreatedWorlds/RealTestWorld.hpp"
 #include "CreatedWorlds/TestWorld.hpp" /* TO BE DELETED */
 
 namespace bas {
@@ -21,6 +26,10 @@ namespace bas {
 
 			case Test:
 				return new TestWorld(window, input);
+				break;
+
+			case RealTest:
+				return new RealTestWorld(window, input);
 				break;
 
 			default:

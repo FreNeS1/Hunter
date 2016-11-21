@@ -11,6 +11,8 @@
 
 namespace bas {
 
+	typedef std::unique_ptr<SoundNode> SoundNodePtr;
+	
 	class SoundNode : public BaseNode
 	{
 	public:

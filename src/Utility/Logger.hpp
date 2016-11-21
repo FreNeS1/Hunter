@@ -22,7 +22,6 @@ namespace bas {
 
 		class FileLogger : public sf::NonCopyable
 		{
-
 		public:
 			enum class LogType
 			{
@@ -32,14 +31,14 @@ namespace bas {
 				LOG_DEBUG
 			};
 
-			static void Set(const char *program_version = "noVersion", bool useDate = true);
+			static void Set(const std::string& program_version = "noVersion", bool useDate = true);
 			static void End();
 
-			static void Log(FileLogger::LogType l_Type, const char* text);
+			static void Log(FileLogger::LogType l_Type, const std::string& text);
 
 		private:
-							FileLogger();
-			static int		getTime();
+								FileLogger();
+			static std::string	getTime();
 
 		private:
 			static std::string			m_File;

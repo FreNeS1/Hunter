@@ -15,7 +15,7 @@ namespace bas {
 		{
 			std::stringstream ss;
 			ss << "Failed to load music at " << path << ". Can't find or open file";
-			utils::FileLogger::Log(utils::FileLogger::LogType::LOG_ERROR, ss.str().c_str());
+			utils::FileLogger::Log(utils::FileLogger::LogType::LOG_ERROR, ss.str());
 		}
 		m_Filenames[ID] = path;
 	}
@@ -39,7 +39,7 @@ namespace bas {
 		{
 			std::stringstream ss;
 			ss << "Failed to load music at " << filename;
-			utils::FileLogger::Log(utils::FileLogger::LogType::LOG_ERROR, ss.str().c_str());
+			utils::FileLogger::Log(utils::FileLogger::LogType::LOG_ERROR, ss.str());
 		}
 		m_Music.setVolume(m_Volume);
 		m_Music.setLoop(m_Loop);

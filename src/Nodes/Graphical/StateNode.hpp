@@ -17,7 +17,9 @@ namespace bas {
 	{
 	public:
 					StateNode(const sf::Texture& texture, int stateWidth, int height, int states);
-		int			getState();
+					StateNode(const StateNode& that);
+
+		int			getState() const;
 		void		setState(int state);
 
 	private:
@@ -27,4 +29,5 @@ namespace bas {
 		int			m_Height;
 	};
 
+	typedef std::unique_ptr<StateNode> StateNodePtr;
 }

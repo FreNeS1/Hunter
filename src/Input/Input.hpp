@@ -67,20 +67,20 @@ namespace bas {
 		void	setMouse(int x, int y);
 		void	setFocused(bool focus);
 
-		bool	getInput(int k);
-		bool	getPress(int k);
-		bool	getRelease(int k);
+		bool	getInput(int k) const;
+		bool	getPress(int k) const;
+		bool	getRelease(int k) const;
 
-		int		getMouseX();
-		int		getMouseY();
+		int		getMouseX() const;
+		int		getMouseY() const;
 
-		bool	getFocused();
-		bool	getMouseUsed();
+		bool	getFocused() const;
+		bool	getMouseUsed() const;
 		
 		void	clear();
 		
 	private:
-		int		getCode(InputType type, int k);
+		int		getCode(InputType type, int k) const;
 
 	private:
 		int 	m_Triggers[(int)Action::TOTAL][NUM_TRIGGERS];

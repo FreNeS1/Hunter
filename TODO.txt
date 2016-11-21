@@ -3,13 +3,62 @@ NEXT PUSH
 0.1.0 - Clean up and get ready to start.
 0.2.0 - Test Menu World is done and all nodes are implemented.
 0.3.0 - Implemented some entity classes and can play arround a bit with sound.
-0.4.0 - Define the most basic stage
+0.3.X - Basic level loading from file.
+0.4.0 - Whatever it is that I get after cleanup is working again with no memory leaks.
+0.5.0 - Player moving on screen.
+0.5.X - With basic controls.
+0.6.0 - Better input (resting point).
+0.7.0 - Define some enemies, some collectables and interactions.
+0.7.X - Finish level loading from file.
+0.8.0 - Create the most basic level posible that integrates all done untill now
 
 
 MAIN THINGS
 
 0.4.0
-- .
+- Copy constructor and typedef
+	- ABSOLUTELY FUCKING EVERITHING FUCK ME.
+
+- Clean up:
+	- ENTITIES (all)
+	- WORLDS
+	- BASEN -> STARTER
+
+- It works again? Prolly not
+
+0.4.1
+- Now it finally fucking works.
+
+0.4.2
+- Memory leaking problem solved!.
+- And with that, FUCKING SAVE THAT SHIT.
+
+
+0.5.0
+- Get a player on the screen with gravity and ground colision (Even without graphics).
+
+0.5.1
+- Get a player with visuals to interact with ground with visuals.
+
+0.5.2
+- Make rudimentary controls of moving and jumping.
+
+0.5.3
+- Make controls for crouching, atacking, run
+
+0.5.4
+    - Negro/Gris: color básico, indica ninguna mejora o equipamiento roto
+	- Verde: representa vida, regeneración o tanqueo.
+	- Amarillo: reservado para armas de energía, brilla con más intensidad cuanta más energía esté cargada.
+	- Azul: representa movilidad y utilidad (salto, agilidad, habilidad de combo).
+	- Rojo: representa daño, velocidad de ataque.
+- Create the custom movement rules for each color(simple things like dodging or dashing)
+
+0.5.5
+- Make walls and ceelings, get a feeling for the controls and test movement fixing values.
+
+
+0.6.0 
 - Get the required input for mouse and controllers and create default input patterns.
 
 

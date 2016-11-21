@@ -22,17 +22,17 @@ namespace bas {
 		class FileIO
 		{
 		public:
-			static void			setTarget(const char* target);
+			static void			setTarget(const std::string& target);
 
-			static bool			write(const char* text);
-			static bool			swap(int location, int length, const char* text);
-			static bool			append(const char* text);
+			static bool			write(const std::string& text);
+			static bool			swap(int location, int length, const std::string& text);
+			static bool			append(const std::string& text);
 			static std::string	read();
 			static std::string	read(int location, int length);
 
 		private:
 			static bool			PrepareFile();
-			static bool			fWrite(const char* text, int location, int length, int mode);
+			static bool			fWrite(const std::string& text, int location, int length, int mode);
 			static bool			fRead(int location, int length, std::string* text);
 
 		private:

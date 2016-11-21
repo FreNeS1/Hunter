@@ -8,12 +8,17 @@ namespace bas {
 	{
 		m_Delete = false;
 		m_Exit = false;
-		m_Next = Worlds::Test;
+		m_Next = Worlds::MainMenu;
 	}
 
-	void MenuWorld::CleanWorld()
+	MenuWorld::~MenuWorld()
 	{
 		m_Music.Stop();
+		delete m_Background;
+		delete m_Title;
+		delete m_ButtonArray;
+		delete m_Mouse;
+		delete m_Audio;
 	}
 
 	void MenuWorld::loadResources()

@@ -136,6 +136,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Basen.cpp" />
+    <ClCompile Include="src\Entities\Game\Active\Player.cpp" />
     <ClCompile Include="src\Entities\Game\Static\Ground.cpp" />
     <ClCompile Include="src\Entities\Menu\Button.cpp" />
     <ClCompile Include="src\Entities\Menu\ButtonArray.cpp" />
@@ -149,6 +150,10 @@
     <ClCompile Include="src\Nodes\Graphical\StateNode.cpp" />
     <ClCompile Include="src\Nodes\Graphical\TextNode.cpp" />
     <ClCompile Include="src\Input\Input.cpp" />
+    <ClCompile Include="src\Nodes\Physical\ColisionHandler.cpp" />
+    <ClCompile Include="src\Nodes\Physical\Colision\ColisionAABB.cpp" />
+    <ClCompile Include="src\Nodes\Physical\Colision\ColisionNode.cpp" />
+    <ClCompile Include="src\Nodes\Physical\Colision\ColisionCircle.cpp" />
     <ClCompile Include="src\Nodes\Physical\MoveNode.cpp" />
     <ClCompile Include="src\Nodes\Physical\SoundNode.cpp" />
     <ClCompile Include="src\Resources\MusicPlayer.cpp" />
@@ -156,7 +161,7 @@
     <ClCompile Include="src\Utility\Options.cpp" />
     <ClCompile Include="src\Utility\Logger.cpp" />
     <ClCompile Include="src\Utility\RNG.cpp" />
-    <ClCompile Include="src\Worlds\LevelData.cpp" />
+    <ClCompile Include="src\Worlds\CreatedWorlds\RealTestWorld.cpp" />
     <ClCompile Include="src\Worlds\CreatedWorlds\MenuWorld.cpp" />
     <ClCompile Include="src\Worlds\CreatedWorlds\TestWorld.cpp" />
     <ClCompile Include="src\Worlds\World.cpp" />
@@ -164,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Basen.hpp" />
+    <ClInclude Include="src\Entities\Game\Active\Player.hpp" />
     <ClInclude Include="src\Entities\Game\Static\Ground.hpp" />
     <ClInclude Include="src\Entities\Menu\Button.hpp" />
     <ClInclude Include="src\Entities\Menu\ButtonArray.hpp" />
@@ -178,11 +184,16 @@
     <ClInclude Include="src\Nodes\Graphical\TextNode.hpp" />
     <ClInclude Include="src\Includes.hpp" />
     <ClInclude Include="src\Input\Input.hpp" />
+    <ClInclude Include="src\Nodes\Physical\ColisionHandler.hpp" />
+    <ClInclude Include="src\Nodes\Physical\Colision\ColisionNode.hpp" />
+    <ClInclude Include="src\Nodes\Physical\Colision\ColisionAABB.hpp" />
+    <ClInclude Include="src\Nodes\Physical\Colision\ColisionCircle.hpp" />
     <ClInclude Include="src\Nodes\Physical\MoveNode.hpp" />
     <ClInclude Include="src\Nodes\Physical\SoundNode.hpp" />
     <ClInclude Include="src\Resources\MusicPlayer.hpp" />
     <ClInclude Include="src\Resources\ResourceHolder.hpp" />
     <ClInclude Include="src\Resources\ResourceHolderNames.hpp" />
+    <ClInclude Include="src\Worlds\CreatedWorlds\RealTestWorld.hpp" />
     <ClInclude Include="src\Worlds\LevelData.hpp" />
     <ClInclude Include="src\Utility\Options.hpp" />
     <ClInclude Include="src\Utility\FileIO.hpp" />

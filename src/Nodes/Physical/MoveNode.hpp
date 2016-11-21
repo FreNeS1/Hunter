@@ -15,12 +15,15 @@
 
 namespace bas {
 
+	typedef std::unique_ptr<MoveNode> MoveNodePtr;
+	
 	class MoveNode : public BaseNode
 	{
 	public:
 				MoveNode(float mass, float drag, bool manual = false, float xSpeed = 0, float ySpeed = 0);
 
 		void	setForce(float xForce, float yForce);
+		void	setSpeed(float xSpeed, float ySpeed);
 
 	private:
 		/*override*/ void	updateCurrent(sf::Time dt);

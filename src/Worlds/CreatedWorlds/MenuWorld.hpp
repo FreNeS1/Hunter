@@ -22,7 +22,7 @@ namespace bas {
 	{
 	public:
 							MenuWorld(sf::RenderWindow* window, Input* input);
-		void				CleanWorld();
+							~MenuWorld();
 
 		/*overload*/ void	update(sf::Time dt);
 

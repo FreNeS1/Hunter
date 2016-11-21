@@ -22,12 +22,16 @@ namespace bas
 		m_Force[1] = yForce;
 	}
 
+	void MoveNode::setSpeed(float xSpeed, float ySpeed)
+	{
+		m_Speed[0] = xSpeed;
+		m_Speed[1] = ySpeed;
+	}
+
 	void MoveNode::updateCurrent(sf::Time dt)
 	{
 		if (!m_Manual)
-		{
 			simulateStep(dt);
-		}
 
 		m_Parent->move(sf::Vector2f(m_Speed[0] * dt.asSeconds(), m_Speed[1] * dt.asSeconds()));
 	}

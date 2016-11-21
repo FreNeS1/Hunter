@@ -7,43 +7,38 @@ namespace bas {
 
 		fs::path FileIO::m_Target("noTarget");
 
-		void FileIO::setTarget(const char* target)
+		void FileIO::setTarget(const std::string& target)
 		{
 			m_Target = target;
 		}
 
-		bool FileIO::write(const char* text)
+		bool FileIO::write(const std::string& text)
 		{
 			if (PrepareFile())
 				if (FileIO::fWrite(text, -1, -1, std::ofstream::out))
 					return true;
-
 			return false;
 		}
 
-		bool FileIO::swap(int location, int length, const char* text)
+		bool FileIO::swap(int location, int length, const std::string& text)
 		{
 			std::string aux;
-
 			if (!fRead(-1, -1, &aux))
 				return false;
-
 			aux.replace(location, length, text);
-			const char* out = aux.c_str();
 
+			const std::string& out = aux;
 			if (PrepareFile())
 				if (FileIO::fWrite(out, -1, -1, std::ofstream::out))
 					return true;
-
 			return false;
 		}
 
-		bool FileIO::append(const char* text)
+		bool FileIO::append(const std::string& text)
 		{
 			if (PrepareFile())
 				if (FileIO::fWrite(text, -1, -1, std::ofstream::app))
 					return true;
-
 			return false;
 		}
 
@@ -78,13 +73,13 @@ namespace bas {
 					return true;
 				else
 				{
-					std::string aux2 = m_Target.string();
+					std::string aux = m_Target.string();
 
 					std::stringstream ss;
 					ss << "Could not create or open file at " << m_Target;			
-					FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
+					FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str());
 					
-					setTarget(aux2.c_str());
+					setTarget(aux);
 					return false;
 				}
 			}
@@ -104,14 +99,14 @@ namespace bas {
 
 				std::stringstream ss;
 				ss << "Could not find file folder, creating folder at " << aux.substr(0, found);
-				FileLogger::Log(FileLogger::LogType::LOG_INFO, ss.str().c_str());
+				FileLogger::Log(FileLogger::LogType::LOG_INFO, ss.str());
 
-				setTarget(aux.c_str());
+				setTarget(aux);
 				return true;
 			}
 		}
 
-		bool FileIO::fWrite(const char* text, int location, int length, int mode)
+		bool FileIO::fWrite(const std::string& text, int location, int length, int mode)
 		{
 			std::ofstream os(m_Target.string(), mode);
 
@@ -121,21 +116,21 @@ namespace bas {
 					os.seekp(location);
 
 				if (length != -1)
-					os.write(text, length);
+					os.write(text.c_str(), length);
 				else
-					os.write(text, strlen(text));
+					os.write(text.c_str(), strlen(text.c_str()));
 
 				os.close();
 				return true;
 			}
 
-			std::string aux2 = m_Target.string();
+			std::string aux = m_Target.string();
 
 			std::stringstream ss;
 			ss << "Could not write file at " << m_Target;
-			FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
+			FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str());
 
-			setTarget(aux2.c_str());
+			setTarget(aux);
 			return false;
 		}
 
@@ -143,13 +138,13 @@ namespace bas {
 		{
 			if ((length < 0 && length != -1) || (location < 0 && location != -1))
 			{
-				std::string aux2 = m_Target.string();
+				std::string aux = m_Target.string();
 
 				std::stringstream ss;
 				ss << "Invalid location or length reading file at " << m_Target;
-				FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
+				FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str());
 
-				setTarget(aux2.c_str());
+				setTarget(aux);
 				return false;
 			}
 
@@ -187,13 +182,13 @@ namespace bas {
 				return true;
 			}
 
-			std::string aux2 = m_Target.string();
+			std::string aux = m_Target.string();
 
 			std::stringstream ss;
 			ss << "Could not open or read file at " << m_Target;
-			FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str().c_str());
+			FileLogger::Log(FileLogger::LogType::LOG_ERROR, ss.str());
 			
-			setTarget(aux2.c_str());
+			setTarget(aux);
 			return false;
 		}
 	}

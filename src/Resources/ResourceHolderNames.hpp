@@ -57,7 +57,7 @@ namespace bas {
 			Debug4
 		};
 
-		static std::string paths[] = { "res/Sound/Button.wav" };
+		static std::string paths[] = { "res/Sound/boop.wav" };
 	}
 }
 

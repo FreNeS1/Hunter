@@ -12,7 +12,17 @@ namespace bas {
 		setState(0);
 	}
 
-	int StateNode::getState()
+	StateNode::StateNode(const StateNode& that)
+		: SpriteNode(that)
+		, m_States(that.m_States)
+		, m_CurrentState(that.m_CurrentState)
+		, m_FrameWidth(that.m_FrameWidth)
+		, m_Height(that.m_Height)
+	{
+			setState(0);
+	}
+
+	int StateNode::getState() const
 	{
 		return m_CurrentState;
 	}

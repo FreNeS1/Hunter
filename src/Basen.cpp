@@ -70,6 +70,7 @@ namespace bas {
 		/* We create a clock and if the time is set, we limit the render() and update() functions */
 
 		sf::Clock clock;
+		sf::Time timeElapsed;
 
 		sf::Time fpsTimer = sf::Time::Zero;
 		sf::Time upsTimer = sf::Time::Zero;
@@ -80,7 +81,7 @@ namespace bas {
 		/* Main program loop */
 		while (m_Window->isOpen())
 		{
-			sf::Time timeElapsed = clock.restart();
+			timeElapsed = clock.restart();
 			m_DebugTimer += timeElapsed;
 			fpsTimer += timeElapsed;
 			upsTimer += timeElapsed;
@@ -143,8 +144,10 @@ namespace bas {
 	{
 		int nextWorld = m_CurrentWorld->getNext();
 		
-		m_CurrentWorld->CleanWorld();
-		m_CurrentWorld = nullptr;
+		/*m_CurrentWorld->CleanWorld();*/
+		delete m_CurrentWorld;
+			delete c;
+		/*m_CurrentWorld = nullptr;*/
 		if (m_Options.getDebugMode())
 			utils::FileLogger::Log(utils::FileLogger::LogType::LOG_DEBUG, "World unloaded.");
 

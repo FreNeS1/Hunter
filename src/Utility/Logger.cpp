@@ -8,7 +8,7 @@ namespace bas {
 		unsigned int FileLogger::m_NumWarnings = 0U;
 		unsigned int FileLogger::m_NumErrors = 0U;
 
-		void FileLogger::Set(const char *program_version, bool useDate)
+		void FileLogger::Set(const std::string& program_version, bool useDate)
 		{
 			m_NumWarnings = 0U;
 			m_NumErrors = 0U;
@@ -23,17 +23,17 @@ namespace bas {
 				localtime_s(&now, &t);
 				temp << "logs/log " << (now.tm_year + 1900) << '-' << (now.tm_mon + 1) << '-' << now.tm_mday
 					<< '-' << now.tm_hour << '-' << now.tm_min << '-' << now.tm_sec << ".log";
-				m_File = temp.str().c_str();
+				m_File = temp.str();
 			}
 			else
 				m_File = "logger.log";
 
-			FileIO::setTarget(m_File.c_str());
+			FileIO::setTarget(m_File);
 
 			std::stringstream ss;
 			ss << "Log file, program version " << program_version << std::endl << std::endl;
 			ss << "[ " << FileLogger::getTime() << " ms ] (INFO): Log file created" << std::endl;
-			FileIO::write(ss.str().c_str());
+			FileIO::write(ss.str());
 		}
 
 		void FileLogger::End()
@@ -45,11 +45,11 @@ namespace bas {
 			ss << "- " << m_NumWarnings << " warnings" << std::endl;
 			ss << "- " << m_NumErrors << " errors" << std::endl;
 
-			FileIO::setTarget(m_File.c_str());
-			FileIO::append(ss.str().c_str());
+			FileIO::setTarget(m_File);
+			FileIO::append(ss.str());
 		}
 
-		void FileLogger::Log(FileLogger::LogType l_Type, const char* text)
+		void FileLogger::Log(FileLogger::LogType l_Type, const std::string& text)
 		{
 			std::stringstream ss;
 
@@ -79,14 +79,18 @@ namespace bas {
 
 			ss << text << std::endl;
 
-			FileIO::setTarget(FileLogger::m_File.c_str());
-			FileIO::append(ss.str().c_str());
+			FileIO::setTarget(FileLogger::m_File);
+			FileIO::append(ss.str());
 		};
 
-		int FileLogger::getTime() {
+		std::string FileLogger::getTime()
+		{
+			std::stringstream ss;
 			sf::Time currentTime = m_Clock.getElapsedTime();
-			int time = currentTime.asMilliseconds();
-			return time;
+			int timeWhole = (int)currentTime.asSeconds();
+			int timeDecimal = currentTime.asMilliseconds() % 1000;
+			ss << timeWhole << "." << timeDecimal;
+			return ss.str();
 		}
 	}
 }

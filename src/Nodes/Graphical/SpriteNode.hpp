@@ -24,6 +24,7 @@ namespace bas {
 	public:
 		explicit			SpriteNode(const sf::Texture& texture);								// For defining a sprite as the whole texture
 							SpriteNode(const sf::Texture& texture, const sf::IntRect& rect);	// If we need the position of the sprite within the texture
+							SpriteNode(const SpriteNode& that);									// Copy constructor
 
 	private:
 		/*override*/ void	drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;	// Draws the node onscreen
@@ -32,4 +33,5 @@ namespace bas {
 		sf::Sprite			m_Sprite;
 	};
 
+	typedef std::unique_ptr<SpriteNode> SpriteNodePtr;
 }

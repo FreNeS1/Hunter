@@ -18,7 +18,6 @@ namespace bas {
 		void				load(Identifier id, const std::string& filename, const Parameter& parameter);	// Loading a resource with a parameter
 		void				load(Identifier id, const std::string& filename);								// Loading a resource by default
 
-
 		Resource&			get(Identifier id);																// Returns a pointer to the resource
 		const Resource&		get(Identifier id) const;														// (Const) Returns a pointer to the resource
 
@@ -30,5 +29,4 @@ namespace bas {
 	};
 
 #include "ResourceHolder.inl"	// We have to explicitly call the "source" file since it is an inline
-
 }

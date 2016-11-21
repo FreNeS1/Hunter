@@ -17,14 +17,19 @@ namespace bas {
 	struct Animation
 	{
 	public:
-									Animation(std::string const& name, int xOffset, int yOffset, int frameWidth, int height, int frames, float duration, bool loop);
-		std::string const&			getName() const;
-		bool						getLoop() const;
-		float						getDuration() const;
-		int							getNumFrames() const;
-		std::vector<sf::IntRect>	m_Frames;
+							Animation(std::string const& name, int xOffset, int yOffset, int frameWidth, int height, int frames, float duration, bool loop);
+		
+							Animation(const Animation& that);
+		Animation&			operator=(const Animation& that);
+									
+		std::string const&	getName() const;
+		bool				getLoop() const;
+		float				getDuration() const;
+		int					getNumFrames() const;
+		sf::IntRect			getFrame(int index) const;
 	
 	private:
+		std::vector<sf::IntRect>	m_Frames;
 		std::string					m_Name;
 		bool						m_Loop;
 		float						m_AnimDuration;
@@ -34,18 +39,23 @@ namespace bas {
 	class DynamicNode : public SpriteNode
 	{
 	public:
-						DynamicNode(const sf::Texture& texture);
-						~DynamicNode();
-		Animation*		createAnimation(std::string const& name, int xOffset, int yOffset, int frameWidth, int height, int numFrames, float duration, bool loop = false);
-		bool			setAnimation(std::string const& name);
-		std::string		getCurrentAnimationName() const;
+							DynamicNode(const sf::Texture& texture);
+							~DynamicNode();
+
+							DynamicNode(const DynamicNode& that);
+		DynamicNode&		operator=(const DynamicNode& that);
+
+		Animation*			createAnimation(std::string const& name, int xOffset, int yOffset, int frameWidth, int height, int numFrames, float duration, bool loop = false);
+		bool				setAnimation(std::string const& name);
+		std::string	const&	getCurrentAnimationName() const;
+		bool				getCurrentAnimationEnd() const;
 
 	protected:
-		void					setAnimation(Animation* animation);
-		/*override*/ void		updateCurrent(sf::Time dt);
+		/*override*/ void	updateCurrent(sf::Time dt);
 
 	private:
-		Animation*				findAnimation(std::string const& name);
+		void				setAnimation(Animation* animation);
+		Animation*			findAnimation(std::string const& name);
 
 	private:
 		std::vector<Animation>	m_AnimationList;
@@ -55,4 +65,5 @@ namespace bas {
 		float					m_CurrentAnimationTime;
 	};
 
+	typedef std::unique_ptr<DynamicNode> DynamicNodePtr;
 }

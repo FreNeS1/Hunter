@@ -59,37 +59,37 @@ namespace bas {
 		m_Focused = focus;
 	}
 
-	bool Input::getInput(int k)
+	bool Input::getInput(int k) const
 	{
 		return m_Input[k];
 	}
 
-	bool Input::getPress(int k)
+	bool Input::getPress(int k) const
 	{
 		return m_Flank[k] == 1;
 	}
 
-	bool Input::getRelease(int k)
+	bool Input::getRelease(int k) const
 	{
 		return m_Flank[k] == -1;
 	}
 
-	int Input::getMouseX()
+	int Input::getMouseX() const
 	{
 		return m_MouseX;
 	}
 
-	int Input::getMouseY()
+	int Input::getMouseY() const
 	{
 		return m_MouseY;
 	}
 
-	bool Input::getFocused()
+	bool Input::getFocused() const
 	{
 		return m_Focused;
 	}
 
-	bool Input::getMouseUsed()
+	bool Input::getMouseUsed() const
 	{
 		return m_MouseUsed;
 	}
@@ -100,7 +100,7 @@ namespace bas {
 			m_Flank[i] = 0;
 	}
 
-	int Input::getCode(InputType type, int k)
+	int Input::getCode(InputType type, int k) const
 	{
 		return (int)type + k;
 	}

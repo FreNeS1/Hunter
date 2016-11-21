@@ -13,11 +13,13 @@
 
 namespace bas {
 
+	typedef std::unique_ptr<AnimationNode> AnimationNodePtr;
+	
 	class AnimationNode : public SpriteNode
 	{
 	public:
 							AnimationNode(const sf::Texture& texture, int frameWidth, int height, int frames, float duration, bool loop = true);								// For defining a sprite as the whole texture
-
+							AnimationNode(const AnimationNode& that);
 	private:
 		/*override*/ void	updateCurrent(sf::Time dt);
 

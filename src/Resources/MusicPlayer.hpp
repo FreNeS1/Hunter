@@ -29,7 +29,7 @@ namespace bas {
 			Debug5
 		};
 
-		static std::string paths[] = { "res/Music/dark fallout.ogg" };
+		static std::string paths[] = { "res/Music/Ossuary5_Rest.ogg" };
 	}
 
 	class MusicPlayer : private sf::NonCopyable

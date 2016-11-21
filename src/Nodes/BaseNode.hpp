@@ -22,17 +22,22 @@
 #include <algorithm>
 
 namespace bas {
+	
 
 	class BaseNode : public sf::Transformable, public sf::Drawable, private sf::NonCopyable
 	{
 	public:
-		typedef std::unique_ptr<BaseNode> Ptr;					// This Ptr will be used a lot due to class relations with itself
+		typedef std::unique_ptr<BaseNode> Ptr;
 
 	public:
 							BaseNode();							// This will create an empty Node with no children
+							~BaseNode();						// Standard destructor
+
+							BaseNode(const BaseNode& that);		// This is the copy constructor
+		BaseNode&			operator=(const BaseNode& that);	// Asignement constructor
 
 		void				attachChild(Ptr newChild);			// This will attach a child and force the target to take this one as parent.
-		Ptr					detachChild(const BaseNode& node);	// This will detach a child and focre the target to take (nullptr) as parent.
+		Ptr					detachChild(const BaseNode& node);	// This will detach a child and force the target to take (nullptr) as parent.
 
 		bool				setActive(bool active);				// This will activate or deactivate the node.
 		bool				getActive();						// THis returns if the current node is active.
@@ -51,10 +56,11 @@ namespace bas {
 		void				updateChildren(sf::Time dt);		// Calls update(dt) in all of the SceneNode's children*/
 
 	protected:
-		BaseNode*			m_Parent;		// This one's parent
-		std::vector<Ptr>	m_Children;		// This one's children
+		std::shared_ptr<BaseNode>	m_Parent;		// This one's parent
+		std::vector<Ptr>			m_Children;		// This one's children
 
-		bool				m_Active;		// This is true if node should interact
+		bool						m_Active;		// This is true if node should interact
 	};
 
+	typedef std::unique_ptr<BaseNode> BaseNodePtr;
 }

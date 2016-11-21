@@ -18,10 +18,11 @@ namespace bas {
 		class Randomizer
 		{
 		public:
-			static void SetSeed(unsigned short seed);
-			static float GetRandom(float rangeMin, float rangeMax);
-			static int GetRandomWhole(int rangeMin, int rangeMax);
-			static bool GetRamdomBool(float ratio);
+			static void		SetSeed(unsigned short seed);
+
+			static float	GetRandom(float rangeMin, float rangeMax);
+			static int		GetRandomWhole(int rangeMin, int rangeMax);
+			static bool		GetRamdomBool(float ratio);
 
 		private:
 			static unsigned short Randomize();

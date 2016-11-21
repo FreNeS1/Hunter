@@ -15,6 +15,27 @@ namespace bas {
 		}
 	}
 
+	Animation::Animation(const Animation& that)
+		: m_Name(that.m_Name)
+		, m_Frames(that.m_Frames)
+		, m_Loop(that.m_Loop)
+		, m_AnimDuration(that.m_AnimDuration)
+		, m_NumFrames(that.m_NumFrames)
+	{ }
+
+	Animation& Animation::operator=(const Animation& that)
+	{
+		if (this != &that)
+		{
+			m_Name = that.m_Name;
+			m_Frames = that.m_Frames;
+			m_Loop = that.m_Loop;
+			m_AnimDuration = that.m_AnimDuration;
+			m_NumFrames = that.m_NumFrames;
+		}
+		return *this;
+	}
+
 	std::string const& Animation::getName() const
 	{
 		return m_Name;
@@ -35,6 +56,11 @@ namespace bas {
 		return m_NumFrames;
 	}
 
+	sf::IntRect Animation::getFrame(int index) const
+	{
+		return m_Frames[index];
+	}
+
 	/***********************************/
 
 	DynamicNode::DynamicNode(const sf::Texture& texture)
@@ -50,14 +76,39 @@ namespace bas {
 
 	DynamicNode::~DynamicNode()
 	{
-		m_CurrentAnimation = nullptr;
 		delete m_CurrentAnimation;
+		m_CurrentAnimation = nullptr;
+	}
+
+	DynamicNode::DynamicNode(const DynamicNode& that)
+		: SpriteNode(that)
+		, m_AnimationList(that.m_AnimationList)
+		, m_CurrentFrame(that.m_CurrentFrame)
+		, m_CurrentAnimationName(that.m_CurrentAnimationName)
+		, m_CurrentAnimationTime(that.m_CurrentAnimationTime)
+	{
+		m_CurrentAnimation = new Animation(*m_CurrentAnimation);
+		updateCurrent(sf::Time::Zero);
+	}
+
+	DynamicNode& DynamicNode::operator=(const DynamicNode& that)
+	{
+		if (this != &that)
+		{
+			(SpriteNode)*this = that;
+			m_AnimationList = that.m_AnimationList;
+			m_CurrentFrame = that.m_CurrentFrame;
+			m_CurrentAnimationName = that.m_CurrentAnimationName;
+			m_CurrentAnimationTime = that.m_CurrentAnimationTime;
+			m_CurrentAnimation = new Animation(*m_CurrentAnimation);
+			updateCurrent(sf::Time::Zero);
+		}
+		return *this;
 	}
 
 	Animation* DynamicNode::createAnimation(std::string const& name, int xOffset, int yOffset, int frameWidth, int height, int numFrames, float duration, bool loop)
 	{
 		m_AnimationList.push_back(Animation(name, xOffset, yOffset, frameWidth, height, numFrames, duration, loop));
-
 		return &m_AnimationList.back();
 	}
 
@@ -66,7 +117,7 @@ namespace bas {
 		for (auto item = m_AnimationList.begin(); item != m_AnimationList.end(); item++)
 		{
 			if (item->getName() == name)
-				return &*item;				
+				return &*item;
 		}
 
 		return nullptr;
@@ -88,15 +139,21 @@ namespace bas {
 	void DynamicNode::setAnimation(Animation* animation)
 	{
 		m_CurrentAnimation = animation;
+		m_CurrentFrame = 1;
 		m_CurrentAnimationName = animation->getName();
 		m_CurrentAnimationTime = 0.0f;
+		updateCurrent(sf::Time::Zero);
 	}
 
-	std::string DynamicNode::getCurrentAnimationName() const
+	std::string const& DynamicNode::getCurrentAnimationName() const
 	{
 		return m_CurrentAnimationName;
 	}
 
+	bool DynamicNode::getCurrentAnimationEnd() const
+	{
+		return m_CurrentAnimationTime >= m_CurrentAnimation->getDuration();
+	}
 
 	void DynamicNode::updateCurrent(sf::Time dt)
 	{
@@ -116,7 +173,7 @@ namespace bas {
 			}
 			else
 			{
-				animState = 1;
+				animState = 0.999f;
 				m_CurrentAnimationTime = m_CurrentAnimation->getDuration() * 1.2f;	// Avoid overflow;
 			}
 		}
@@ -126,7 +183,7 @@ namespace bas {
 		if (m_CurrentFrame != currentFrame)
 		{
 			m_CurrentFrame = currentFrame;
-			sf::IntRect& currentRect = m_CurrentAnimation->m_Frames[currentFrame];
+			sf::IntRect& currentRect = m_CurrentAnimation->getFrame(currentFrame);
 			m_Sprite.setTextureRect(sf::IntRect(currentRect));
 		}
 	}

@@ -22,27 +22,27 @@ namespace bas {
 		{
 		public:
 
-					Options(const char* file);
+					Options(const std::string& file);
 			bool	loadOptions();
 			void	repairOptions();
 
 			/* Here go all the calls for the options */
-			int		getWidth();
-			int		getHeight();
-			bool	getFullscreen();
-			bool	getFixedFps();
-			int		getMaxFps();
-			bool	getFixedUps();
-			int		getMaxUps();
-			bool	getDebugMode();
+			int		getWidth() const;
+			int		getHeight() const;
+			bool	getFullscreen() const;
+			bool	getFixedFps() const;
+			int		getMaxFps() const;
+			bool	getFixedUps() const;
+			int		getMaxUps() const;
+			bool	getDebugMode() const;
 
 		private:
 			bool	getFromFile();
-			bool	getContents(std::string *contents);
-			int		getValue(int location, std::string* contents);
+			bool	getContents(const std::string& contents);
+			int		getValue(int location, const std::string& contents);
 
 		private:
-			const char* m_File;
+			std::string m_File;
 			std::size_t m_Indeces[50]; // Can manage up to 50 options
 			std::size_t m_Start;
 			std::size_t m_End;
